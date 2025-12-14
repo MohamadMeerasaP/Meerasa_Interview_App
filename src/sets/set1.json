@@ -1,10 +1,13 @@
-[
-  {
-    "question": "What is closure in JavaScript?",
-    "answer": "A closure is a function that remembers its lexical scope even when executed outside that scope."
-  },
-  {
-    "question": "Explain the event loop.",
-    "answer": "The event loop coordinates the call stack and the task queue to run asynchronous callbacks."
-  }
-]
+{
+  "setName": "JavaScript Basics",
+  "data": [
+    {
+      "question": "What is closure in JavaScript?",
+      "answer": "A closure is a function that remembers its lexical scope even when executed outside that scope."
+    },
+    {
+      "question": "Explain the event loop.",
+      "answer": "The event loop coordinates the call stack and the task queue to run asynchronous callbacks."
+    }
+  ]
+}

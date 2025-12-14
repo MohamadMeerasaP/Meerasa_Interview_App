@@ -1,9 +1,23 @@
 @import "tailwindcss";
 
+/* Optional global styling */
 html, body, #root {
   height: 100%;
 }
 
-body {
-  @apply bg-slate-50 text-slate-800;
+/* Custom Animations */
+@keyframes fadeSlow {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeSlow {
+  animation: fadeSlow 0.5s ease-out;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade {
+  animation: fade 0.35s ease-out;
 }

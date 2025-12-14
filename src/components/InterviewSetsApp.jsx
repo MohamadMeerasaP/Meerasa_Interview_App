@@ -196,19 +196,6 @@ export default function InterviewSetsApp() {
                     <option key={s.id} value={s.id}>{s.name}</option>
                   ))}
                 </select>
-
-                {/* Dropdown icon */}
-                <span className="pointer-events-none absolute right-3 top-[45px] text-slate-400 group-hover:text-indigo-500 transition">
-                  <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none">
-                    <path
-                      d="M6 8l4 4 4-4"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
               </div>
 
               {/* Optional short description under dropdown */}
@@ -245,75 +232,116 @@ export default function InterviewSetsApp() {
           )}
         </div>
 
-        {/* Results card */}
-        <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 relative overflow-hidden">
-          {/* Loader overlay */}
-          {loading && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/80 backdrop-blur-sm">
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin" />
-                <div className="text-sm text-slate-700">Loading questions…</div>
+        {/* Results Card (Enhanced) */}
+        <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200/70 p-6 sm:p-8 transition-all">
+
+          {/* Topic Banner */}
+          {selectedSetId && !loading && (
+            <div className="mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-300/30">
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 7l9-5 9 5v6c0 5-4 10-9 10S3 18 3 13V7z"
+                      stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity=".4" />
+                    <path d="M9 12l2 2 4-4"
+                      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                    {availableSets.find(s => s.id === selectedSetId)?.name || "Topic"}
+                  </h2>
+                  <p className="text-slate-500 text-sm mt-1">
+                    📘 {qaList.length} curated interview Q/A in this set
+                  </p>
+                </div>
               </div>
+
+              {/* Decorative gradient underline */}
+              <div className="mt-4 h-1 w-32 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full opacity-70"></div>
             </div>
           )}
 
-          {/* Search row */}
+          {/* Loader */}
+          {loading && (
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/80 backdrop-blur-md rounded-2xl animate-fade">
+              <div className="w-14 h-14 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin"></div>
+              <p className="mt-3 text-sm text-slate-700 font-medium">Fetching questions…</p>
+            </div>
+          )}
+
+          {/* Search Row */}
           {selectedSetId && !loading && (
-            <div className="mb-4 flex flex-col sm:flex-row items-center gap-3">
+            <div className="mb-6 flex flex-col sm:flex-row items-center gap-4 animate-fadeSlow">
               <div className="relative flex-1">
                 <span className="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
-                  <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 19l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
+                    <path d="M19 19l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" />
                     <circle cx="9" cy="9" r="5" stroke="currentColor" strokeWidth="1.5" />
                   </svg>
                 </span>
                 <input
-                  placeholder="Search question or answer..."
+                  placeholder="Search questions or answers..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border rounded-md text-sm focus:ring-2 focus:ring-indigo-200"
+                  className="w-full pl-11 pr-12 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all"
                 />
                 {query && (
-                  <button onClick={() => setQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm px-2">
+                  <button
+                    onClick={() => setQuery("")}
+                    className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-700"
+                  >
                     Clear
                   </button>
                 )}
               </div>
 
-              <div className="text-sm text-slate-600">{qaList.length} Q/A</div>
+              <div className="text-sm text-slate-600 bg-slate-100 px-4 py-2 rounded-md shadow-sm border border-slate-200">
+                {qaList.length} Q/A
+              </div>
             </div>
           )}
 
-          {/* Table */}
+          {/* Enhanced Table */}
           {selectedSetId && !loading && (
-            <div className="overflow-x-auto border rounded-md">
-              <table className="w-full table-auto border-collapse">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="p-3 text-left text-sm text-slate-600 w-12">#</th>
-                    <th className="p-3 text-left text-sm text-slate-600">Question</th>
-                    <th className="p-3 text-left text-sm text-slate-600">Answer</th>
-                    <th className="p-3 text-center text-sm text-slate-600 w-28">Action</th>
+            <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-inner animate-fadeSlow">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
+                    <th className="p-3 text-left text-sm font-semibold text-slate-600 w-12">#</th>
+                    <th className="p-3 text-left text-sm font-semibold text-slate-600">Question</th>
+                    <th className="p-3 text-left text-sm font-semibold text-slate-600">Answer</th>
+                    <th className="p-3 text-center text-sm font-semibold text-slate-600 w-32">Action</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {filtered.length === 0 ? (
                     <tr>
-                      <td colSpan="4" className="p-6 text-center text-slate-500">No matching questions.</td>
+                      <td colSpan="4" className="p-8 text-center text-slate-500 text-sm">
+                        No matching questions found.
+                      </td>
                     </tr>
                   ) : (
                     filtered.map((item, idx) => (
-                      <tr key={idx} className="odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition-colors">
+                      <tr
+                        key={idx}
+                        className="odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40 transition-colors"
+                      >
                         <td className="p-3 align-top text-sm text-slate-700">{idx + 1}</td>
-                        <td className="p-3 align-top text-sm text-slate-800 whitespace-pre-line">{item.question}</td>
-                        <td className="p-3 align-top text-sm text-slate-700 whitespace-pre-line">{item.answer}</td>
-                        <td className="p-3 text-center align-top">
+                        <td className="p-3 align-top text-sm text-slate-800 whitespace-pre-line leading-relaxed">{item.question}</td>
+                        <td className="p-3 align-top text-sm text-slate-700 whitespace-pre-line leading-relaxed">{item.answer}</td>
+
+                        <td className="p-3 text-center">
                           <button
                             onClick={() => navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-md border text-sm bg-white hover:bg-indigo-50 transition"
-                            title="Copy Q/A"
+                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm border border-indigo-200 bg-white shadow-sm hover:bg-indigo-100 hover:border-indigo-300 hover:shadow transition-all"
                           >
-                            <svg className="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" /><rect x="4" y="4" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" /></svg>
+                            <svg className="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none">
+                              <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                              <rect x="4" y="4" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
                             Copy
                           </button>
                         </td>
@@ -325,17 +353,20 @@ export default function InterviewSetsApp() {
             </div>
           )}
 
-          {/* Empty state when no set chosen */}
+          {/* Empty State */}
           {!selectedSetId && !loading && (
-            <div className="p-8 text-center text-slate-600">
-              <div className="text-lg font-medium">No set selected</div>
-              <div className="text-sm mt-1">Use the dropdown above or quick-set chips to pick a topic.</div>
+            <div className="p-12 text-center text-slate-600 animate-fadeSlow">
+              <h3 className="text-lg font-semibold">Begin by choosing a topic above</h3>
+              <p className="text-sm mt-2">Each topic contains curated interview questions and high-quality answers.</p>
             </div>
           )}
 
-          {/* Footer note */}
+          {/* Footer */}
           <div className="mt-6 text-xs text-slate-500">
-            Tip: place JSON files at <code className="bg-slate-100 px-1 rounded">src/sets/set1.json</code> ... <code className="bg-slate-100 px-1 rounded">src/sets/set6.json</code>.
+            Manage sets at:
+            <code className="bg-slate-100 px-1 py-0.5 rounded ml-1">
+              src/sets/set1.json
+            </code>
           </div>
         </div>
       </div>
