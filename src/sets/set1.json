@@ -1,13 +1,185 @@
 {
-  "setName": "JavaScript Basics",
+  "setName": "JavaScript",
   "data": [
     {
-      "question": "What is closure in JavaScript?",
-      "answer": "A closure is a function that remembers its lexical scope even when executed outside that scope."
+      "question": "Difference between var, let, const?",
+      "answer": "var is function-scoped and can be re-declared. let is block-scoped. const is block-scoped and cannot be reassigned."
     },
     {
-      "question": "Explain the event loop.",
-      "answer": "The event loop coordinates the call stack and the task queue to run asynchronous callbacks."
+      "question": "What is Hoisting?",
+      "answer": "JavaScript moves variable and function declarations to the top of their scope during execution."
+    },
+    {
+      "question": "Event Loop & Call Stack?",
+      "answer": "The call stack executes code line-by-line. The event loop queues async callbacks from microtasks (promises) and macrotasks (timeouts)."
+    },
+    {
+      "question": "Promises vs async/await?",
+      "answer": "Promises use .then() to handle async code, while async/await provides a cleaner synchronous-like syntax."
+    },
+    {
+      "question": "What is a Closure?",
+      "answer": "A closure is a function that remembers its lexical scope even after the outer function has finished executing."
+    },
+    {
+      "question": "== vs === ?",
+      "answer": "== compares value with type coercion, === compares both value and type."
+    },
+    {
+      "question": "What are Higher Order Functions?",
+      "answer": "Functions that take other functions as arguments or return them (e.g., map, filter, reduce)."
+    },
+    {
+      "question": "map vs filter vs reduce?",
+      "answer": "map transforms elements, filter selects elements, reduce accumulates values into a single output."
+    },
+    {
+      "question": "Arrow functions vs normal functions?",
+      "answer": "Arrow functions are shorter and do not have their own this, arguments, or prototype."
+    },
+    {
+      "question": "What is Prototype?",
+      "answer": "Every JavaScript object has a prototype from which it can inherit properties."
+    },
+    {
+      "question": "Prototypal Inheritance?",
+      "answer": "Objects inherit directly from other objects via the prototype chain."
+    },
+    {
+      "question": "What is Debouncing?",
+      "answer": "A technique that delays a function until user stops triggering it (useful for search inputs)."
+    },
+    {
+      "question": "What is Throttling?",
+      "answer": "Limits a function to run at most once in a given time interval (useful for scroll events)."
+    },
+    {
+      "question": "Memory Management in JS?",
+      "answer": "JS automatically allocates memory and frees unused memory through garbage collection."
+    },
+    {
+      "question": "What are Pure Functions?",
+      "answer": "Functions that always return the same output for the same input and have no side effects."
+    },
+    {
+      "question": "Event Bubbling vs Capturing?",
+      "answer": "Bubbling: event moves inner → outer. Capturing: outer → inner."
+    },
+    {
+      "question": "Synchronous vs Asynchronous?",
+      "answer": "Sync code blocks execution. Async code runs in background without blocking."
+    },
+    {
+      "question": "Execution Context?",
+      "answer": "Environment where code runs — includes memory, variables, and this binding."
+    },
+    {
+      "question": "Lexical Scoping?",
+      "answer": "Functions can access variables defined in their parent scope."
+    },
+    {
+      "question": "Temporal Dead Zone?",
+      "answer": "Time between creation and initialization of let/const where access throws an error."
+    },
+    {
+      "question": "Global vs Function vs Block Scope?",
+      "answer": "Global: whole program. Function: inside a function. Block: inside {}."
+    },
+    {
+      "question": "Shadowed Variables?",
+      "answer": "A local variable that overrides a variable with the same name in an outer scope."
+    },
+    {
+      "question": "Scope Chain?",
+      "answer": "JS resolves variables by checking current scope and then moving up parent scopes."
+    },
+    {
+      "question": "What are memory leaks?",
+      "answer": "Unnecessary memory usage caused by unused references, global variables, or active timers."
+    },
+    {
+      "question": "Garbage Collection?",
+      "answer": "JS removes objects that are no longer reachable from the root."
+    },
+    {
+      "question": "WeakMap / WeakSet?",
+      "answer": "Data structures that hold weak references to objects, helping prevent memory leaks."
+    },
+    {
+      "question": "Deep copy vs Shallow copy?",
+      "answer": "Shallow copies only copy top-level properties; deep copies duplicate nested objects too."
+    },
+    {
+      "question": "call, apply, bind differences?",
+      "answer": "call invokes function with comma-separated args; apply uses array; bind returns a new function with fixed this."
+    },
+    {
+      "question": "What is the call stack vs heap?",
+      "answer": "Call stack stores function execution; heap stores objects and dynamic memory."
+    },
+    {
+      "question": "Tail Call Optimization?",
+      "answer": "Optimization where last function call reuses the current stack frame."
+    },
+    {
+      "question": "How to detect performance bottlenecks?",
+      "answer": "Use Chrome Performance tab, profiling tools, console.time(), and React DevTools."
+    },
+    {
+      "question": "Set vs Map vs WeakMap vs WeakSet?",
+      "answer": "Set: unique values. Map: key-value pairs. WeakMap/WeakSet: weakly referenced objects (no memory leaks)."
+    },
+    {
+      "question": "Event Delegation?",
+      "answer": "Assigning one event listener to a parent rather than multiple children."
+    },
+    {
+      "question": "Why is immutability important?",
+      "answer": "Prevents side effects, improves debugging, and helps React detect changes efficiently."
+    },
+    {
+      "question": "What are side effects?",
+      "answer": "Operations outside function scope like API calls, DOM manipulation, or mutations."
+    },
+    {
+      "question": "'use strict'?",
+      "answer": "Enables stricter parsing and error handling; prevents silent errors."
+    },
+    {
+      "question": "try–catch–finally with async code?",
+      "answer": "Use try/catch inside async functions to handle rejected promises."
+    },
+    {
+      "question": "What is prototype chaining?",
+      "answer": "The method by which objects inherit properties through their prototype chain."
+    },
+    {
+      "question": "What happens when using JSON.parse(JSON.stringify())?",
+      "answer": "Removes functions, undefined, dates; fails on circular references."
+    },
+    {
+      "question": "What is an Event Emitter?",
+      "answer": "Pattern that allows subscribing and emitting custom events (commonly used in Node.js)."
+    },
+    {
+      "question": "Curry function?",
+      "answer": "Transforming a multi-argument function into a sequence of single-argument functions."
+    },
+    {
+      "question": "Memoization?",
+      "answer": "Caching results of expensive function calls for faster re-execution."
+    },
+    {
+      "question": "What happens when you call new?",
+      "answer": "Creates a new object, assigns prototype, binds this, executes constructor, returns object."
+    },
+    {
+      "question": "What is async vs defer in script tags?",
+      "answer": "async loads & executes immediately; defer loads async but executes after HTML parsing."
+    },
+    {
+      "question": "Microtask vs Macrotask?",
+      "answer": "Microtasks (Promises) run before macrotasks (setTimeout, setInterval)."
     }
   ]
 }
