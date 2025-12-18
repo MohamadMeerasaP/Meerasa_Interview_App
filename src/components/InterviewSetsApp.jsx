@@ -1,6 +1,16 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
+import Logo from "../assets/Logo.png"
+
+
+const STORAGE_KEYS = {
+  SELECTED_SET: "interview-prep-selected-set",
+  SEARCH_QUERY: "interview-prep-search-query",
+  CURRENT_PAGE: "interview-prep-current-page",
+  STARRED_QUESTIONS: "interview-prep-starred",
+  REVIEWED_QUESTIONS: "interview-prep-reviewed",
+}
 
 export default function InterviewSetsApp() {
   const MAX_SETS = 6
@@ -10,19 +20,21 @@ export default function InterviewSetsApp() {
   const [loading, setLoading] = useState(false)
   const [query, setQuery] = useState("")
 
+  const [starredQuestions, setStarredQuestions] = useState(new Set())
+  const [starFilter, setStarFilter] = useState("all") // "all" or "starred"
+
+  const [reviewedQuestions, setReviewedQuestions] = useState({})
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1)
   const [pageLoading, setPageLoading] = useState(false)
   const ITEMS_PER_PAGE = 5
 
-  function goToPage(page) {
-    setPageLoading(true)
+  const searchInputRef = useRef(null)
 
-    setTimeout(() => {
-      setCurrentPage(page)
-      setPageLoading(false)
-    }, 500) // 0.5 sec loader
-  }
+  const [highlightedIndex, setHighlightedIndex] = useState(0)
+
+  const [showResetModal, setShowResetModal] = useState(false)
 
   const sampleSets = {
     1: [
@@ -41,6 +53,96 @@ export default function InterviewSetsApp() {
         answer: "React is a UI library for building interfaces using declarative components.",
       },
     ],
+  }
+
+  useEffect(() => {
+    const savedSetId = localStorage.getItem(STORAGE_KEYS.SELECTED_SET)
+    const savedQuery = localStorage.getItem(STORAGE_KEYS.SEARCH_QUERY)
+    const savedPage = localStorage.getItem(STORAGE_KEYS.CURRENT_PAGE)
+    const savedStarred = localStorage.getItem(STORAGE_KEYS.STARRED_QUESTIONS)
+    const savedReviewed = localStorage.getItem(STORAGE_KEYS.REVIEWED_QUESTIONS)
+
+    if (savedQuery) setQuery(savedQuery)
+    if (savedPage) setCurrentPage(Number(savedPage))
+    if (savedStarred) {
+      try {
+        setStarredQuestions(new Set(JSON.parse(savedStarred)))
+      } catch {}
+    }
+    if (savedReviewed) {
+      try {
+        setReviewedQuestions(JSON.parse(savedReviewed))
+      } catch {}
+    }
+
+    // Set selected set after availableSets is populated
+    if (savedSetId) {
+      setTimeout(() => setSelectedSetId(Number(savedSetId)), 100)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (selectedSetId) {
+      localStorage.setItem(STORAGE_KEYS.SELECTED_SET, selectedSetId.toString())
+    }
+  }, [selectedSetId])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.SEARCH_QUERY, query)
+  }, [query])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CURRENT_PAGE, currentPage.toString())
+  }, [currentPage])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.STARRED_QUESTIONS, JSON.stringify([...starredQuestions]))
+  }, [starredQuestions])
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.REVIEWED_QUESTIONS, JSON.stringify(reviewedQuestions))
+  }, [reviewedQuestions])
+
+  function toggleStar(questionId) {
+    setStarredQuestions((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(questionId)) {
+        newSet.delete(questionId)
+      } else {
+        newSet.add(questionId)
+      }
+      return newSet
+    })
+  }
+
+  function resetProgress() {
+    if (selectedSetId) {
+      setShowResetModal(true)
+    }
+  }
+
+  function handleConfirmReset() {
+    setReviewedQuestions((prev) => ({
+      ...prev,
+      [selectedSetId]: {},
+    }))
+    setShowResetModal(false)
+  }
+
+  function markAsReviewed(questionId) {
+    setReviewedQuestions((prev) => ({
+      ...prev,
+      [selectedSetId]: {
+        ...(prev[selectedSetId] || {}),
+        [questionId]: true,
+      },
+    }))
+  }
+
+  function getReviewedCount() {
+    if (!selectedSetId) return 0
+    const reviewed = reviewedQuestions[selectedSetId] || {}
+    return Object.keys(reviewed).length
   }
 
   // Detect available sets
@@ -110,15 +212,25 @@ export default function InterviewSetsApp() {
     return item.question?.toLowerCase().includes(text) || item.answer?.toLowerCase().includes(text)
   })
 
-  // Pagination logic
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const filteredByStars = filtered.filter((item, idx) => {
+    if (starFilter === "starred") {
+      const questionId = `${selectedSetId}-${idx}`
+      return starredQuestions.has(questionId)
+    }
+    return true
+  })
 
-  const paginatedData = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+  // Pagination logic
+  const totalPages = Math.ceil(filteredByStars.length / ITEMS_PER_PAGE)
+
+  const paginatedData = filteredByStars.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
   function chooseSet(id) {
     setQuery("")
     setSelectedSetId(id)
     setCurrentPage(1)
+    setStarFilter("all")
+    setHighlightedIndex(0)
   }
 
   function clearSelection() {
@@ -126,6 +238,89 @@ export default function InterviewSetsApp() {
     setQuery("")
     setQaList([])
     setCurrentPage(1)
+    setStarFilter("all")
+    setHighlightedIndex(0)
+  }
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      // S - Focus search
+      if (e.key === "s" || e.key === "S") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          searchInputRef.current?.focus()
+        }
+      }
+
+      // Esc - Clear search or close selected topic
+      if (e.key === "Escape") {
+        if (query) {
+          setQuery("")
+        } else if (selectedSetId) {
+          clearSelection()
+        }
+      }
+
+      // Arrow Left - Previous page
+      if (e.key === "ArrowLeft") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          if (currentPage > 1) {
+            goToPage(currentPage - 1)
+          }
+        }
+      }
+
+      // Arrow Right - Next page
+      if (e.key === "ArrowRight") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          const totalPages = Math.ceil(filteredByStars.length / ITEMS_PER_PAGE)
+          if (currentPage < totalPages) {
+            goToPage(currentPage + 1)
+          }
+        }
+      }
+
+      // C - Copy highlighted Q/A
+      if (e.key === "c" || e.key === "C") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          const item = paginatedData[highlightedIndex]
+          if (item) {
+            navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)
+          }
+        }
+      }
+
+      // Arrow Up/Down - Navigate highlighted row
+      if (e.key === "ArrowUp") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          setHighlightedIndex((prev) => Math.max(0, prev - 1))
+        }
+      }
+
+      if (e.key === "ArrowDown") {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault()
+          setHighlightedIndex((prev) => Math.min(paginatedData.length - 1, prev + 1))
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [query, selectedSetId, currentPage, highlightedIndex])
+
+  function goToPage(page) {
+    setPageLoading(true)
+
+    setTimeout(() => {
+      setCurrentPage(page)
+      setPageLoading(false)
+      setHighlightedIndex(0)
+    }, 500) // 0.5 sec loader
   }
 
   return (
@@ -138,12 +333,12 @@ export default function InterviewSetsApp() {
 
             <div className="p-4 sm:p-6 md:px-8 md:py-8 flex flex-col gap-4">
               <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-lg bg-white/10 flex items-center justify-center shadow-md ring-1 ring-white/10">
-                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" viewBox="0 0 24 24">
-                    <path d="M8 7L4 12l4 5" stroke="white" strokeWidth="1.6" />
-                    <path d="M16 7l4 5-4 5" stroke="white" strokeWidth="1.6" />
-                    <rect x="3" y="3" width="18" height="18" rx="4" stroke="white" strokeWidth="0.6" opacity=".15" />
-                  </svg>
+                <div className="w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-3xl bg-white flex items-center justify-center shadow-2xl ring-2 ring-white/50">
+                  <img
+                    src={Logo || "/placeholder.svg"}
+                    alt="Interview Prep Logo"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover scale-100"
+                  />
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -173,8 +368,22 @@ export default function InterviewSetsApp() {
                 </div>
               </div>
 
-              <div className="hidden md:block text-xs sm:text-sm text-indigo-100 mt-2">
-                Tip: press <b>S</b> to focus search
+              <div className="hidden md:block text-xs sm:text-sm text-indigo-100 mt-2 space-y-1">
+                <div className="font-semibold mb-1.5">⌨️ Keyboard Shortcuts:</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                  <div>
+                    <kbd className="px-1.5 py-0.5 bg-white/20 rounded">S</kbd> Focus search
+                  </div>
+                  <div>
+                    <kbd className="px-1.5 py-0.5 bg-white/20 rounded">Esc</kbd> Clear / Close
+                  </div>
+                  <div>
+                    <kbd className="px-1.5 py-0.5 bg-white/20 rounded">← →</kbd> Navigate pages
+                  </div>
+                  <div>
+                    <kbd className="px-1.5 py-0.5 bg-white/20 rounded">C</kbd> Copy highlighted
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -222,12 +431,21 @@ export default function InterviewSetsApp() {
           {!selectedSetId && (
             <div className="mt-6 flex items-start sm:items-center gap-3 sm:gap-4 text-slate-600">
               <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24">
-                  <path d="M12 2L20 7v6c0 5-4 9-8 9s-8-4-8-9V7l8-5z" stroke="currentColor" strokeWidth="1.2" />
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M3 7l9-5 9 5v6c0 5-4 9-8 9s-8-4-8-9V7z"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    opacity=".4"
+                  />
+                  <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.6" />
                 </svg>
               </div>
+
               <div>
-                <div className="text-base sm:text-lg font-semibold text-slate-800">Pick a set to start practicing</div>
+                <div className="text-base sm:text-lg font-semibold text-slate-800 break-words">
+                  Pick a set to start practicing
+                </div>
                 <p className="text-xs sm:text-sm mt-1">Each set contains curated questions & answers.</p>
               </div>
             </div>
@@ -243,7 +461,7 @@ export default function InterviewSetsApp() {
                 <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg">
                   <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none">
                     <path
-                      d="M3 7l9-5 9 5v6c0 5-4 10-9 10S3 18 3 13V7z"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       stroke="currentColor"
                       strokeWidth="1.3"
                       opacity=".4"
@@ -259,6 +477,35 @@ export default function InterviewSetsApp() {
                   <p className="text-slate-500 text-xs sm:text-sm mt-1">📘 {qaList.length} curated interview Q/A</p>
                 </div>
               </div>
+
+              <div className="mt-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="1.5" />
+                    </svg>
+                    <span className="text-sm font-semibold text-slate-700">
+                      Progress: {getReviewedCount()} / {qaList.length} reviewed
+                    </span>
+                  </div>
+                  <button
+                    onClick={resetProgress}
+                    className="text-xs px-2 py-1 rounded bg-white border hover:bg-slate-50 transition"
+                  >
+                    Reset
+                  </button>
+                </div>
+                <div className="w-full h-2 bg-white rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-500"
+                    style={{ width: `${qaList.length > 0 ? (getReviewedCount() / qaList.length) * 100 : 0}%` }}
+                  />
+                </div>
+                <div className="text-xs text-slate-500 mt-1">
+                  {qaList.length > 0 ? Math.round((getReviewedCount() / qaList.length) * 100) : 0}% complete
+                </div>
+              </div>
+
               <div className="mt-3 sm:mt-4 h-1 w-24 sm:w-32 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full opacity-70"></div>
             </div>
           )}
@@ -271,7 +518,7 @@ export default function InterviewSetsApp() {
             </div>
           )}
 
-          {/* Search */}
+          {/* Search and Filter */}
           {selectedSetId && !loading && (
             <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <div className="relative flex-1">
@@ -283,7 +530,8 @@ export default function InterviewSetsApp() {
                 </span>
 
                 <input
-                  placeholder="Search questions..."
+                  ref={searchInputRef}
+                  placeholder="Search questions... (press S)"
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value)
@@ -302,8 +550,35 @@ export default function InterviewSetsApp() {
                 )}
               </div>
 
+              <div className="flex items-center gap-2 bg-slate-100 px-2 py-1 rounded-md">
+                <button
+                  onClick={() => {
+                    setStarFilter("all")
+                    setCurrentPage(1)
+                  }}
+                  className={`px-3 py-1.5 rounded text-xs font-medium transition ${
+                    starFilter === "all" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => {
+                    setStarFilter("starred")
+                    setCurrentPage(1)
+                  }}
+                  className={`px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1 ${
+                    starFilter === "starred"
+                      ? "bg-white text-indigo-600 shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <span>⭐</span> Starred
+                </button>
+              </div>
+
               <div className="text-xs sm:text-sm text-slate-600 bg-slate-100 px-3 sm:px-4 py-2 rounded-md shadow-sm text-center sm:text-left whitespace-nowrap">
-                {qaList.length} Q/A
+                {filteredByStars.length} Q/A
               </div>
             </div>
           )}
@@ -315,6 +590,7 @@ export default function InterviewSetsApp() {
                 <thead>
                   <tr className="bg-gradient-to-r from-slate-50 to-slate-100 border-b">
                     <th className="p-3 text-left text-sm font-semibold text-slate-600 w-12">#</th>
+                    <th className="p-3 text-center text-sm font-semibold text-slate-600 w-16">⭐</th>
                     <th className="p-3 text-left text-sm font-semibold text-slate-600">Question</th>
                     <th className="p-3 text-left text-sm font-semibold text-slate-600">Answer</th>
                     <th className="p-3 text-center text-sm font-semibold text-slate-600 w-32">Action</th>
@@ -324,7 +600,7 @@ export default function InterviewSetsApp() {
                 <tbody>
                   {pageLoading ? (
                     <tr>
-                      <td colSpan="4" className="p-8 text-center">
+                      <td colSpan="5" className="p-8 text-center">
                         <div className="flex flex-col items-center justify-center">
                           <div className="w-10 h-10 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin"></div>
                           <p className="mt-3 text-sm text-slate-700">Loading page…</p>
@@ -333,31 +609,82 @@ export default function InterviewSetsApp() {
                     </tr>
                   ) : paginatedData.length === 0 ? (
                     <tr>
-                      <td colSpan="4" className="p-8 text-center text-slate-500 text-sm">
+                      <td colSpan="5" className="p-8 text-center text-slate-500 text-sm">
                         No matching questions found.
                       </td>
                     </tr>
                   ) : (
-                    paginatedData.map((item, idx) => (
-                      <tr key={idx} className="odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40 transition">
-                        <td className="p-3 text-sm text-slate-700">{(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}</td>
-                        <td className="p-3 text-sm text-slate-800 whitespace-pre-line">{item.question}</td>
-                        <td className="p-3 text-sm text-slate-700 whitespace-pre-line">{item.answer}</td>
-                        <td className="p-3 text-center">
-                          <button
-                            onClick={() => navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm border bg-white shadow-sm 
+                    paginatedData.map((item, idx) => {
+                      const globalIdx = filtered.findIndex((q) => q === item)
+                      const questionId = `${selectedSetId}-${globalIdx}`
+                      const isStarred = starredQuestions.has(questionId)
+                      const isReviewed = reviewedQuestions[selectedSetId]?.[questionId]
+                      const isHighlighted = idx === highlightedIndex
+
+                      return (
+                        <tr
+                          key={idx}
+                          className={`transition ${
+                            isHighlighted
+                              ? "bg-indigo-100 ring-2 ring-indigo-400"
+                              : isReviewed
+                                ? "odd:bg-green-50/50 even:bg-green-100/50 hover:bg-indigo-50/40"
+                                : "odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40"
+                          }`}
+                          onClick={() => {
+                            markAsReviewed(questionId)
+                            setHighlightedIndex(idx)
+                          }}
+                        >
+                          <td className="p-3 text-sm text-slate-700">{(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}</td>
+                          <td className="p-3 text-center">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                toggleStar(questionId)
+                              }}
+                              className="text-xl hover:scale-125 transition-transform"
+                            >
+                              {isStarred ? "⭐" : "☆"}
+                            </button>
+                          </td>
+                          <td className="p-3 text-sm text-slate-800 whitespace-pre-line">{item.question}</td>
+                          <td className="p-3 text-sm text-slate-700 whitespace-pre-line">{item.answer}</td>
+                          <td className="p-3 text-center">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)
+                              }}
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm border bg-white shadow-sm 
                        hover:bg-indigo-100 hover:border-indigo-300 transition"
-                          >
-                            <svg className="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none">
-                              <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                              <rect x="4" y="4" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                            </svg>
-                            Copy
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                            >
+                              <svg className="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none">
+                                <rect
+                                  x="9"
+                                  y="9"
+                                  width="11"
+                                  height="11"
+                                  rx="2"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                />
+                                <rect
+                                  x="4"
+                                  y="4"
+                                  width="11"
+                                  height="11"
+                                  rx="2"
+                                  stroke="currentColor"
+                                  strokeWidth="1.5"
+                                />
+                              </svg>
+                              Copy
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    })
                   )}
                 </tbody>
               </table>
@@ -377,46 +704,69 @@ export default function InterviewSetsApp() {
               ) : paginatedData.length === 0 ? (
                 <div className="p-8 text-center text-slate-500 text-sm">No matching questions found.</div>
               ) : (
-                paginatedData.map((item, idx) => (
-                  <div key={idx} className="bg-white border rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold">
-                          {(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
-                        </span>
-                        <span className="text-xs font-medium text-slate-500 uppercase tracking-wide block mb-2">
-                          Question
-                        </span>
+                paginatedData.map((item, idx) => {
+                  const globalIdx = filtered.findIndex((q) => q === item)
+                  const questionId = `${selectedSetId}-${globalIdx}`
+                  const isStarred = starredQuestions.has(questionId)
+                  const isReviewed = reviewedQuestions[selectedSetId]?.[questionId]
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`border rounded-xl shadow-sm p-4 transition-all ${
+                        isReviewed ? "bg-green-50 border-green-200" : "bg-white hover:shadow-md"
+                      }`}
+                      onClick={() => markAsReviewed(questionId)}
+                    >
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold">
+                            {(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleStar(questionId)
+                            }}
+                            className="text-xl hover:scale-125 transition-transform"
+                          >
+                            {isStarred ? "⭐" : "☆"}
+                          </button>
+                          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Question</span>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)
+                          }}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border bg-white shadow-sm 
+                             hover:bg-indigo-100 hover:border-indigo-300 transition shrink-0"
+                        >
+                          <svg className="w-3.5 h-3.5 text-indigo-600" viewBox="0 0 24 24" fill="none">
+                            <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                            <rect x="4" y="4" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                          </svg>
+                          Copy
+                        </button>
                       </div>
-                      <button
-                        onClick={() => navigator.clipboard?.writeText(`Q: ${item.question}\nA: ${item.answer}`)}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border bg-white shadow-sm 
-                           hover:bg-indigo-100 hover:border-indigo-300 transition shrink-0"
-                      >
-                        <svg className="w-3.5 h-3.5 text-indigo-600" viewBox="0 0 24 24" fill="none">
-                          <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                          <rect x="4" y="4" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                        </svg>
-                        Copy
-                      </button>
-                    </div>
 
-                    <div className="mb-4">
-                      <p className="text-sm sm:text-base text-slate-800 font-medium leading-relaxed whitespace-pre-line">
-                        {item.question}
-                      </p>
-                    </div>
+                      <div className="mb-4">
+                        <p className="text-sm sm:text-base text-slate-800 font-medium leading-relaxed whitespace-pre-line">
+                          {item.question}
+                        </p>
+                      </div>
 
-                    <div className="border-t pt-3">
-                      <span className="text-xs font-medium text-slate-500 uppercase tracking-wide block mb-2">
-                        Answer
-                      </span>
-                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
-                        {item.answer}
-                      </p>
+                      <div className="border-t pt-3">
+                        <span className="text-xs font-medium text-slate-500 uppercase tracking-wide block mb-2">
+                          Answer
+                        </span>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                          {item.answer}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  )
+                })
               )}
             </div>
           )}
@@ -432,7 +782,7 @@ export default function InterviewSetsApp() {
                   ${
                     currentPage === 1
                       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-white hover:bg-indigo-100 border-slate-300"
+                      : "bg-white border-slate-300 hover:bg-indigo-100"
                   }`}
               >
                 <span className="hidden sm:inline">Prev</span>
@@ -443,7 +793,7 @@ export default function InterviewSetsApp() {
               <div className="flex gap-2">
                 {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter((page) => {
-                    // On mobile, show current page, first, last, and adjacent pages
+                    // On mobile, show current page, first, and last
                     if (totalPages <= 5) return true
                     if (page === 1 || page === totalPages) return true
                     if (Math.abs(page - currentPage) <= 1) return true
@@ -479,7 +829,7 @@ export default function InterviewSetsApp() {
                   ${
                     currentPage === totalPages
                       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-white hover:bg-indigo-100 border-slate-300"
+                      : "bg-white border-slate-300 hover:bg-indigo-100"
                   }`}
               >
                 <span className="hidden sm:inline">Next</span>
@@ -503,6 +853,53 @@ export default function InterviewSetsApp() {
           </div>
         </div>
       </div>
+
+      {showResetModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24">
+                  <path
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-slate-900">Reset Progress?</h3>
+                <p className="text-sm text-slate-600 mt-1">This will clear all reviewed questions for this topic.</p>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
+              <p className="text-xs text-amber-800">
+                This action cannot be undone. Your progress tracking for{" "}
+                <span className="font-semibold">{availableSets.find((s) => s.id === selectedSetId)?.name}</span> will be
+                reset to 0.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowResetModal(false)}
+                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmReset}
+                className="flex-1 px-4 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors shadow-lg shadow-red-600/30"
+              >
+                Reset Progress
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
