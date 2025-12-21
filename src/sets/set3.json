@@ -1,1 +1,105 @@
-[]
+{
+  "setName": "TypeScript",
+  "data": [
+    {
+      "question": "What is TypeScript and why do we use it?",
+      "answer": "TypeScript is a typed superset of JavaScript that adds static typing to catch errors early and improve code reliability."
+    },
+    {
+      "question": "Difference between interface and type?",
+      "answer": "Interfaces define object shapes and are extendable; types can represent unions, intersections, primitives, and are more flexible."
+    },
+    {
+      "question": "What are Generics in TypeScript?",
+      "answer": "Generics allow you to create reusable components that work with multiple types while maintaining type safety."
+    },
+    {
+      "question": "What are any, unknown, never, void?",
+      "answer": "any disables type checking; unknown is a safer any; never means a function never returns; void means a function returns nothing."
+    },
+    {
+      "question": "What are Union and Intersection types?",
+      "answer": "Union types represent either one type or another; intersection types combine multiple types into one."
+    },
+    {
+      "question": "What is Type Inference?",
+      "answer": "TypeScript automatically infers types based on assigned values."
+    },
+    {
+      "question": "What are Enums?",
+      "answer": "Enums create a set of named constants that improve readability and maintainability."
+    },
+    {
+      "question": "What is Duck Typing?",
+      "answer": "If two objects have the same structure, TypeScript considers them compatible — regardless of their names."
+    },
+    {
+      "question": "What is readonly in TypeScript?",
+      "answer": "readonly prevents properties from being modified after initialization."
+    },
+    {
+      "question": "How does TypeScript help in large applications?",
+      "answer": "It helps catch errors early, improves maintainability, and reduces runtime failures through strong typing."
+    },
+    {
+      "question": "What is a Tuple?",
+      "answer": "A tuple is a fixed-length array with defined types for each element."
+    },
+    {
+      "question": "What are Utility Types like Partial, Pick, Omit, Record?",
+      "answer": "Utility types help transform existing types quickly, such as making properties optional or selecting specific fields."
+    },
+    {
+      "question": "What is Declaration Merging?",
+      "answer": "TypeScript automatically merges multiple declarations with the same name into one."
+    },
+    {
+      "question": "What is a Module in TypeScript?",
+      "answer": "Any file with imports or exports is considered a module and helps organize code."
+    },
+    {
+      "question": "How do you type React components in TypeScript?",
+      "answer": "Use React.FC for components and interfaces or types for props."
+    },
+    {
+      "question": "How do you type useState?",
+      "answer": "Example: const [value, setValue] = useState<number>(0);"
+    },
+    {
+      "question": "How do you type events in React?",
+      "answer": "Use React.ChangeEvent, React.MouseEvent, React.KeyboardEvent, etc."
+    },
+    {
+      "question": "What is type narrowing?",
+      "answer": "TS reduces a variable to a more specific type using typeof, instanceof, or property checks."
+    },
+    {
+      "question": "What is 'as const'?",
+      "answer": "It converts values into readonly literal types."
+    },
+    {
+      "question": "What are Index Signatures?",
+      "answer": "They define dynamic object keys, e.g. { [key: string]: string }."
+    },
+    {
+      "question": "What is a Discriminated Union?",
+      "answer": "Union types with a shared literal field that allows TypeScript to safely determine which type is being used."
+    },
+    {
+      "question": "What is a Namespace?",
+      "answer": "A way to group related logic, now mostly replaced by ES modules."
+    },
+    {
+      "question": "What is an Ambient Declaration (.d.ts)?",
+      "answer": "Used to describe types for external JavaScript libraries without modifying the library."
+    },
+    {
+      "question": "What is Structural Typing?",
+      "answer": "TypeScript checks type compatibility based on structure, not explicit type names."
+    },
+    {
+      "question": "What is 'never' used for?",
+      "answer": "For functions that never return, such as those that throw errors or run infinite loops."
+    }
+  ]
+}
