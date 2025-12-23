@@ -1,0 +1,205 @@
+{
+  "setName": "Node.js",
+  "data": [
+    {
+      "question": "What is Node.js?",
+      "answer": "Node.js is a JavaScript runtime built on Chrome’s V8 engine used to build fast, scalable backend applications."
+    },
+    {
+      "question": "What is event-driven architecture?",
+      "answer": "Node handles requests using events and callbacks instead of multiple threads, which makes it highly scalable."
+    },
+    {
+      "question": "How does Node.js handle asynchronous operations?",
+      "answer": "Through the event loop, callbacks, promises, and async/await."
+    },
+    {
+      "question": "What is the Event Loop?",
+      "answer": "A mechanism that manages asynchronous tasks by moving callbacks from task queues into the call stack."
+    },
+    {
+      "question": "What are microtasks and macrotasks?",
+      "answer": "Microtasks include Promises and run before macrotasks like setTimeout and setInterval."
+    },
+    {
+      "question": "What are middleware functions in Express?",
+      "answer": "Functions executed between request and response such as authentication, logging, and validation."
+    },
+    {
+      "question": "What is Express.js used for?",
+      "answer": "To build APIs efficiently using routing, middleware, and HTTP utilities."
+    },
+    {
+      "question": "How do you create a basic Express API?",
+      "answer": "app.get('/route', (req, res) => res.send());"
+    },
+    {
+      "question": "What is routing in Express?",
+      "answer": "Defining endpoints for different HTTP methods and URL paths."
+    },
+    {
+      "question": "What are route params vs query params?",
+      "answer": "Route params are part of the URL path; query params come after '?' as key=value pairs."
+    },
+    {
+      "question": "What is CORS?",
+      "answer": "A security mechanism that controls which origins can access the backend."
+    },
+    {
+      "question": "How do you enable CORS in Express?",
+      "answer": "Using the cors() middleware."
+    },
+    {
+      "question": "What is an API?",
+      "answer": "A structured method for systems to communicate using requests and responses."
+    },
+    {
+      "question": "What is a REST API?",
+      "answer": "An architecture style using HTTP methods with stateless communication."
+    },
+    {
+      "question": "Explain GET, POST, PUT, PATCH, DELETE.",
+      "answer": "GET: read, POST: create, PUT: replace, PATCH: update partially, DELETE: remove."
+    },
+    {
+      "question": "What do status codes mean?",
+      "answer": "200 OK, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Server Error."
+    },
+    {
+      "question": "What is JSON?",
+      "answer": "A lightweight data format commonly used for APIs."
+    },
+    {
+      "question": "Difference between require and import?",
+      "answer": "require is CommonJS; import is ES modules."
+    },
+    {
+      "question": "What is package.json?",
+      "answer": "A file containing project information, scripts, and dependencies."
+    },
+    {
+      "question": "What is package-lock.json?",
+      "answer": "Locks exact dependency versions for consistent installations."
+    },
+    {
+      "question": "What are modules in Node?",
+      "answer": "Reusable blocks of code imported and exported from files."
+    },
+    {
+      "question": "What is JWT Authentication?",
+      "answer": "A stateless token-based authentication method where user data is encoded and signed."
+    },
+    {
+      "question": "Difference between JWT and OAuth?",
+      "answer": "JWT is token authentication; OAuth is third-party login authorization."
+    },
+    {
+      "question": "How does JWT authentication work?",
+      "answer": "User logs in → server creates token → client stores token → client sends it on every request → server verifies."
+    },
+    {
+      "question": "Why do we hash passwords?",
+      "answer": "To avoid storing plain passwords; hashed values cannot be reversed."
+    },
+    {
+      "question": "What is bcrypt?",
+      "answer": "A library for hashing and comparing passwords securely."
+    },
+    {
+      "question": "What are WebSockets?",
+      "answer": "A protocol for full-duplex real-time communication (e.g., chat apps)."
+    },
+    {
+      "question": "REST vs WebSockets?",
+      "answer": "REST is request-response; WebSockets maintain a continuous connection."
+    },
+    {
+      "question": "What is middleware used for?",
+      "answer": "For tasks like authentication, logging, validation, and error handling."
+    },
+    {
+      "question": "How do you handle errors in Express?",
+      "answer": "Using an error-handling middleware: (err, req, res, next)."
+    },
+    {
+      "question": "What is Node.js memory management?",
+      "answer": "Node allocates memory objects on the heap and clears unused memory using garbage collection."
+    },
+    {
+      "question": "Monolithic vs Microservices?",
+      "answer": "Monolith is a single large application; microservices are separate independent services."
+    },
+    {
+      "question": "Benefits of microservices?",
+      "answer": "Scalability, independent deployment, better fault isolation."
+    },
+    {
+      "question": "What is rate limiting?",
+      "answer": "Restricting the number of requests from a client to prevent abuse."
+    },
+    {
+      "question": "What is load balancing?",
+      "answer": "Distributing incoming traffic across multiple servers."
+    },
+    {
+      "question": "What is clustering in Node.js?",
+      "answer": "Using multiple CPU cores by spawning worker processes."
+    },
+    {
+      "question": "How to secure a Node.js API?",
+      "answer": "Use JWT, CORS, HTTPS, validation, bcrypt, and rate limiting."
+    },
+    {
+      "question": "What is helmet middleware?",
+      "answer": "Security middleware that sets protective HTTP headers."
+    },
+    {
+      "question": "What is validation middleware?",
+      "answer": "Ensures incoming request data is correct using tools like Joi, Yup, or Zod."
+    },
+    {
+      "question": "What is body-parser?",
+      "answer": "Middleware for parsing JSON request bodies."
+    },
+    {
+      "question": "How do you connect Node with MongoDB?",
+      "answer": "Using Mongoose or the MongoDB native driver."
+    },
+    {
+      "question": "Why use async/await?",
+      "answer": "For cleaner and more readable asynchronous code."
+    },
+    {
+      "question": "What are streams in Node.js?",
+      "answer": "Data processed in chunks, useful for large files and efficient I/O."
+    },
+    {
+      "question": "What is a Buffer?",
+      "answer": "Temporary storage for binary data."
+    },
+    {
+      "question": "What is process.nextTick()?",
+      "answer": "Schedules a microtask to run before the event loop continues."
+    },
+    {
+      "question": "How to handle millions of requests?",
+      "answer": "Use caching, clustering, load balancing, queues, and optimized databases."
+    },
+    {
+      "question": "What is PM2?",
+      "answer": "A production process manager for Node.js (clustering, monitoring, auto-restart)."
+    },
+    {
+      "question": "What is MVC architecture?",
+      "answer": "Model handles data, View handles UI, Controller handles logic."
+    },
+    {
+      "question": "How to upload files in Node.js?",
+      "answer": "Using multer middleware."
+    },
+    {
+      "question": "What is Nodemailer?",
+      "answer": "A Node.js package used to send emails."
+    }
+  ]
+}
