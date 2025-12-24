@@ -1,0 +1,145 @@
+{
+  "setName": "MongoDB",
+  "data": [
+    {
+      "question": "What is MongoDB?",
+      "answer": "A NoSQL, document-based database that stores data in flexible JSON-like documents."
+    },
+    {
+      "question": "Why is MongoDB used in MERN?",
+      "answer": "It stores JSON easily, scales horizontally, and integrates naturally with JavaScript."
+    },
+    {
+      "question": "What is a document?",
+      "answer": "A single record stored in JSON/BSON format."
+    },
+    {
+      "question": "What is a collection?",
+      "answer": "A group of documents, similar to a table in SQL."
+    },
+    {
+      "question": "MongoDB vs SQL?",
+      "answer": "MongoDB is schema-less, uses documents, and scales horizontally, while SQL uses tables and fixed schemas."
+    },
+    {
+      "question": "What is _id in MongoDB?",
+      "answer": "A unique identifier automatically assigned to each document."
+    },
+    {
+      "question": "How do you insert a document?",
+      "answer": "db.users.insertOne({ name: 'Meerasa' });"
+    },
+    {
+      "question": "How do you update a document?",
+      "answer": "db.users.updateOne({ id }, { $set: { name: 'New' } });"
+    },
+    {
+      "question": "How do you delete a document?",
+      "answer": "db.users.deleteOne({ id });"
+    },
+    {
+      "question": "What is find() vs findOne()?",
+      "answer": "find returns multiple documents, while findOne returns the first matching document."
+    },
+    {
+      "question": "What is Mongoose?",
+      "answer": "An ODM library used to define schemas and interact with MongoDB using models."
+    },
+    {
+      "question": "Why use Mongoose?",
+      "answer": "It provides schemas, validation, hooks, and cleaner queries."
+    },
+    {
+      "question": "How do you define a schema in Mongoose?",
+      "answer": "const User = new Schema({ name: String });"
+    },
+    {
+      "question": "What is a model in Mongoose?",
+      "answer": "A wrapper around a schema that interacts with the database."
+    },
+    {
+      "question": "CRUD operations in Mongoose?",
+      "answer": "create, find, findById, updateOne, deleteOne."
+    },
+    {
+      "question": "What is an index in MongoDB?",
+      "answer": "A structure that speeds up search queries."
+    },
+    {
+      "question": "When do you use indexing?",
+      "answer": "When a field is frequently searched or sorted."
+    },
+    {
+      "question": "What is a compound index?",
+      "answer": "An index created on multiple fields."
+    },
+    {
+      "question": "What is the aggregation pipeline?",
+      "answer": "A framework to process and transform documents in stages."
+    },
+    {
+      "question": "Common stages in aggregation?",
+      "answer": "$match, $group, $sort, $project, $lookup."
+    },
+    {
+      "question": "What does $match do?",
+      "answer": "Filters documents based on specific conditions."
+    },
+    {
+      "question": "What does $group do?",
+      "answer": "Groups documents and performs operations like sum or count."
+    },
+    {
+      "question": "What does $lookup do?",
+      "answer": "Performs joins between collections."
+    },
+    {
+      "question": "$project usage?",
+      "answer": "Selects or reshapes the fields returned in the output."
+    },
+    {
+      "question": "Example of an aggregation pipeline?",
+      "answer": "db.users.aggregate([{ $match: { city: 'Chennai' }}, { $group: { _id: '$city', count: { $sum: 1 }}}]);"
+    },
+    {
+      "question": "What are query operators?",
+      "answer": "Operators like $gt, $lt, $in, $or used to filter data."
+    },
+    {
+      "question": "Example of $gt?",
+      "answer": "{ age: { $gt: 30 } }"
+    },
+    {
+      "question": "Example of $or?",
+      "answer": "{ $or: [{ age: 20 }, { city: 'Delhi' }] }"
+    },
+    {
+      "question": "What is population in Mongoose?",
+      "answer": "Automatically fetching referenced documents similar to SQL joins."
+    },
+    {
+      "question": "What is lean() in Mongoose?",
+      "answer": "Returns plain JavaScript objects instead of full Mongoose documents."
+    },
+    {
+      "question": "What is a TTL Index?",
+      "answer": "An index that automatically deletes documents after a specified time."
+    },
+    {
+      "question": "What is sharding?",
+      "answer": "Splitting data across multiple servers to achieve horizontal scaling."
+    },
+    {
+      "question": "When do we use sharding?",
+      "answer": "When data becomes too large for a single server and needs scaling."
+    },
+    {
+      "question": "What is a replica set?",
+      "answer": "A group of MongoDB servers that ensure high availability and failover."
+    },
+    {
+      "question": "Does MongoDB support ACID?",
+      "answer": "Yes, MongoDB supports ACID transactions across multiple documents."
+    }
+  ]
+}
