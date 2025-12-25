@@ -1,0 +1,85 @@
+{
+  "setName": "HR & Behavioral",
+  "data": [
+    {
+      "question": "Tell me about yourself.",
+      "answer": "I'm Meerasa, a full-stack developer with 3 years of experience in React, Node, MongoDB, and TypeScript. I build scalable UI and backend systems, especially in MERN. My strengths are fast learning, debugging, and delivering reliable features under pressure. I enjoy solving problems and improving performance, and I'm now looking for a role where I can take more ownership and work on impactful projects."
+    },
+    {
+      "question": "What are your strengths?",
+      "answer": "Fast learner, calm under pressure, and good at breaking down complex tasks into simple solutions."
+    },
+    {
+      "question": "What is your biggest weakness?",
+      "answer": "Earlier I tried to take on too many tasks myself. Now I prioritize better and communicate workload clearly."
+    },
+    {
+      "question": "Why should we hire you?",
+      "answer": "I bring strong MERN expertise, write clean maintainable code, adapt quickly, and take full ownership of features."
+    },
+    {
+      "question": "Why are you leaving your current job?",
+      "answer": "I’m looking for more challenging work, better growth opportunities, and a place where I can contribute more meaningfully."
+    },
+    {
+      "question": "How do you handle pressure or deadlines?",
+      "answer": "I prioritize tasks, break work into smaller pieces, stay calm, and communicate progress regularly."
+    },
+    {
+      "question": "Tell me about a conflict you faced at work.",
+      "answer": "I disagreed on a solution approach. We compared both logically, tested quickly, and chose the faster and cleaner option."
+    },
+    {
+      "question": "Give an example of fixing a production issue.",
+      "answer": "A login API was failing. I quickly traced the token mismatch, fixed the validation, tested the flow, and deployed a stable fix."
+    },
+    {
+      "question": "Describe a time with multiple deadlines.",
+      "answer": "I listed tasks, marked critical ones, discussed priorities, and delivered in order without affecting quality."
+    },
+    {
+      "question": "How do you handle a difficult teammate?",
+      "answer": "I stay calm, understand their viewpoint, keep discussions factual, and ensure clarity to avoid misunderstandings."
+    },
+    {
+      "question": "How do you take feedback?",
+      "answer": "Positively. I use feedback to refine my coding style, approach, and productivity."
+    },
+    {
+      "question": "Describe a time you took ownership.",
+      "answer": "During a failed deployment, I led the debugging, fixed issues, updated stakeholders, and ensured a clean redeployment."
+    },
+    {
+      "question": "How do you stay updated with technologies?",
+      "answer": "I follow documentation, developer communities, tutorials, and build small projects to practice concepts."
+    },
+    {
+      "question": "What motivates you?",
+      "answer": "Solving real problems, improving application performance, and delivering features users actually enjoy using."
+    },
+    {
+      "question": "Have you mentored juniors?",
+      "answer": "Yes. I’ve helped new developers understand the codebase, debug issues, and learn best practices."
+    },
+    {
+      "question": "What do you do when you get stuck?",
+      "answer": "I analyze the problem step-by-step, test assumptions, research solutions, and discuss with teammates if needed."
+    },
+    {
+      "question": "Tell me about a mistake you made.",
+      "answer": "I once pushed code without full testing. Now I always validate thoroughly before raising PRs."
+    },
+    {
+      "question": "How do you ensure quality?",
+      "answer": "By writing clean code, building modular components, validating inputs, testing edge cases, and doing proper self-review."
+    },
+    {
+      "question": "What are your long-term goals?",
+      "answer": "To become a strong full-stack developer and eventually lead small teams or manage end-to-end product modules."
+    },
+    {
+      "question": "Do you have any questions for us?",
+      "answer": "Yes, I'd like to know the tech stack, team structure, and what success looks like in the first 3 months for this role."
+    }
+  ]
+}
