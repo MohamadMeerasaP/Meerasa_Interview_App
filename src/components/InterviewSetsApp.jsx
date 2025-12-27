@@ -847,10 +847,36 @@ export default function InterviewSetsApp() {
           )}
 
           {/* Footer */}
-          <div className="mt-6 text-xs text-slate-500">
-            Manage sets in:
-            <code className="bg-slate-100 px-1.5 py-0.5 rounded ml-1 text-xs">src/sets/</code>
+        <div className="mt-10 border-t pt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
+            
+            {/* Left */}
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500" />
+              <span>
+                © {new Date().getFullYear()}{" "}
+                <span className="font-medium text-slate-700">
+                  Meerasa’s Interview Prep
+                </span>
+              </span>
+            </div>
+
+            {/* Right */}
+            <div className="flex items-center gap-2 text-slate-400">
+              <div className="text-center">
+              Crafted with ❤️ by{" "}
+              <a
+                href="https://meerasaportfolios.web.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-indigo-600 hover:text-indigo-700 underline underline-offset-4 transition"
+              >
+                Mohamad Meerasa
+              </a>
+            </div>
+            </div>
           </div>
+        </div>
         </div>
       </div>
 
