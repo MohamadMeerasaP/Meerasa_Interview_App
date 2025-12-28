@@ -1,0 +1,141 @@
+{
+  "setName": "Angular",
+  "data": [
+    {
+      "question": "What is Angular?",
+      "answer": "Angular is a TypeScript-based front-end framework developed by Google for building scalable single-page applications using components, modules, and dependency injection."
+    },
+    {
+      "question": "Angular vs AngularJS?",
+      "answer": "Angular (2+) is component-based, uses TypeScript, and has better performance, while AngularJS (1.x) is scope-based and uses JavaScript."
+    },
+    {
+      "question": "What are components in Angular?",
+      "answer": "Components control a part of the UI and consist of a template (HTML), class (TypeScript), and styles."
+    },
+    {
+      "question": "What is a module (NgModule)?",
+      "answer": "A module groups related components, directives, pipes, and services and defines how the application is organized."
+    },
+    {
+      "question": "What is data binding?",
+      "answer": "Data binding synchronizes data between the component and the template using interpolation, property binding, event binding, and two-way binding."
+    },
+    {
+      "question": "What is two-way data binding?",
+      "answer": "Two-way data binding keeps the view and model in sync using [(ngModel)]."
+    },
+    {
+      "question": "What are directives?",
+      "answer": "Directives add behavior to DOM elements. Types include structural (*ngIf, *ngFor) and attribute (ngClass, ngStyle)."
+    },
+    {
+      "question": "What is Dependency Injection (DI)?",
+      "answer": "DI is a design pattern where Angular provides dependencies to components instead of creating them manually."
+    },
+    {
+      "question": "What are services in Angular?",
+      "answer": "Services are reusable classes used to share data or logic across components."
+    },
+    {
+      "question": "What is RxJS?",
+      "answer": "RxJS is a reactive programming library used in Angular for handling asynchronous data using Observables."
+    },
+    {
+      "question": "Observable vs Promise?",
+      "answer": "Observables can emit multiple values and be cancelled, while Promises emit a single value."
+    },
+    {
+      "question": "What is HttpClient?",
+      "answer": "HttpClient is an Angular service used to perform HTTP requests such as GET, POST, PUT, and DELETE."
+    },
+    {
+      "question": "What is routing in Angular?",
+      "answer": "Routing allows navigation between views using URLs without reloading the page."
+    },
+    {
+      "question": "What are route guards?",
+      "answer": "Guards control access to routes using interfaces like CanActivate, CanDeactivate, and CanLoad."
+    },
+    {
+      "question": "What is lazy loading?",
+      "answer": "Lazy loading loads Angular modules only when required, improving application performance."
+    },
+    {
+      "question": "What are pipes?",
+      "answer": "Pipes transform data in templates, such as date, currency, uppercase, and custom pipes."
+    },
+    {
+      "question": "What is Change Detection?",
+      "answer": "Change detection is Angular’s mechanism for updating the DOM when application data changes."
+    },
+    {
+      "question": "What is OnPush change detection strategy?",
+      "answer": "OnPush improves performance by checking changes only when input references change."
+    },
+    {
+      "question": "What is ngOnInit?",
+      "answer": "ngOnInit is a lifecycle hook called once after component initialization."
+    },
+    {
+      "question": "What are lifecycle hooks?",
+      "answer": "Hooks like ngOnInit, ngOnChanges, ngOnDestroy allow control over component lifecycle."
+    },
+    {
+      "question": "What is Angular CLI?",
+      "answer": "Angular CLI is a command-line tool used to create, build, test, and deploy Angular applications."
+    },
+    {
+      "question": "What is AOT compilation?",
+      "answer": "Ahead-of-Time compilation converts Angular HTML and TypeScript into efficient JavaScript during build time."
+    },
+    {
+      "question": "What is JIT compilation?",
+      "answer": "Just-in-Time compilation compiles the application in the browser at runtime."
+    },
+    {
+      "question": "Template-driven vs Reactive forms?",
+      "answer": "Template-driven forms rely on directives in HTML, while reactive forms are defined in TypeScript using FormGroup and FormControl."
+    },
+    {
+      "question": "What is FormBuilder?",
+      "answer": "FormBuilder is a service that simplifies the creation of reactive forms."
+    },
+    {
+      "question": "What is trackBy in ngFor?",
+      "answer": "trackBy improves performance by uniquely identifying list items."
+    },
+    {
+      "question": "What are interceptors?",
+      "answer": "Interceptors modify HTTP requests or responses globally, commonly used for auth and logging."
+    },
+    {
+      "question": "What is ViewChild?",
+      "answer": "ViewChild allows access to a child component, directive, or DOM element."
+    },
+    {
+      "question": "What is Content Projection?",
+      "answer": "Content projection allows inserting external content into a component using ng-content."
+    },
+    {
+      "question": "What is ng-template?",
+      "answer": "ng-template defines a block of HTML that can be conditionally rendered."
+    },
+    {
+      "question": "What is ng-container?",
+      "answer": "ng-container groups elements without adding extra nodes to the DOM."
+    },
+    {
+      "question": "What is state management in Angular?",
+      "answer": "State management handles shared application state using services or libraries like NgRx."
+    },
+    {
+      "question": "What is NgRx?",
+      "answer": "NgRx is a Redux-inspired state management library for Angular."
+    },
+    {
+      "question": "How do you optimize Angular performance?",
+      "answer": "Using lazy loading, OnPush change detection, trackBy, AOT compilation, and minimizing watchers."
+    }
+  ]
+}
