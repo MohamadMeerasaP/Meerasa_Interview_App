@@ -1,0 +1,161 @@
+{
+  "setName": "HTML & CSS",
+  "data": [
+    {
+      "question": "What is HTML?",
+      "answer": "HTML (HyperText Markup Language) is used to structure content on the web using elements like headings, paragraphs, links, and images."
+    },
+    {
+      "question": "What are semantic HTML elements?",
+      "answer": "Semantic elements like header, footer, section, article, and nav clearly describe their meaning, improving accessibility and SEO."
+    },
+    {
+      "question": "Difference between div and span?",
+      "answer": "div is a block-level element, while span is an inline element used for styling small portions of content."
+    },
+    {
+      "question": "What is the DOM?",
+      "answer": "The DOM (Document Object Model) represents the HTML document as a tree structure that JavaScript can manipulate."
+    },
+    {
+      "question": "What are meta tags?",
+      "answer": "Meta tags provide metadata such as character set, viewport, SEO keywords, and page description."
+    },
+    {
+      "question": "What is accessibility in HTML?",
+      "answer": "Accessibility ensures websites are usable by people with disabilities using semantic tags, ARIA attributes, and keyboard navigation."
+    },
+    {
+      "question": "What are ARIA attributes?",
+      "answer": "ARIA attributes enhance accessibility by providing additional context to screen readers."
+    },
+    {
+      "question": "Difference between inline, block, and inline-block?",
+      "answer": "Inline elements don’t start a new line, block elements take full width, and inline-block combines both behaviors."
+    },
+    {
+      "question": "What is CSS?",
+      "answer": "CSS (Cascading Style Sheets) styles and layouts web pages using colors, fonts, spacing, and positioning."
+    },
+    {
+      "question": "What is the CSS box model?",
+      "answer": "The box model consists of content, padding, border, and margin."
+    },
+    {
+      "question": "What is CSS specificity?",
+      "answer": "Specificity determines which CSS rule applies: inline > ID > class > element."
+    },
+    {
+      "question": "What is the CSS cascade?",
+      "answer": "The cascade resolves conflicts between CSS rules based on importance, specificity, and source order."
+    },
+    {
+      "question": "What are pseudo-classes?",
+      "answer": "Pseudo-classes define special states like :hover, :focus, :active."
+    },
+    {
+      "question": "What are pseudo-elements?",
+      "answer": "Pseudo-elements style specific parts like ::before, ::after, ::first-letter."
+    },
+    {
+      "question": "Flexbox vs Grid?",
+      "answer": "Flexbox is one-dimensional (row or column), Grid is two-dimensional (rows and columns)."
+    },
+    {
+      "question": "How do you center a div?",
+      "answer": "Using Flexbox: display:flex; justify-content:center; align-items:center."
+    },
+    {
+      "question": "What is responsive design?",
+      "answer": "Responsive design adapts layouts for different screen sizes using flexible layouts and media queries."
+    },
+    {
+      "question": "What are media queries?",
+      "answer": "Media queries apply CSS based on screen size, orientation, or device type."
+    },
+    {
+      "question": "What are responsive units?",
+      "answer": "Units like %, rem, em, vw, and vh scale across different devices."
+    },
+    {
+      "question": "What is position property?",
+      "answer": "Position controls layout placement: static, relative, absolute, fixed, sticky."
+    },
+    {
+      "question": "Difference between absolute and relative positioning?",
+      "answer": "Relative positions an element relative to itself; absolute positions relative to nearest positioned ancestor."
+    },
+    {
+      "question": "What is z-index?",
+      "answer": "z-index controls vertical stacking order of positioned elements."
+    },
+    {
+      "question": "What is overflow property?",
+      "answer": "Overflow controls content overflow: hidden, scroll, auto, visible."
+    },
+    {
+      "question": "What is display:none vs visibility:hidden?",
+      "answer": "display:none removes the element from layout; visibility:hidden hides it but keeps space."
+    },
+    {
+      "question": "What are CSS variables?",
+      "answer": "CSS variables (--var) store reusable values for colors, spacing, etc."
+    },
+    {
+      "question": "What is BEM naming convention?",
+      "answer": "BEM (Block__Element--Modifier) improves CSS readability and maintainability."
+    },
+    {
+      "question": "What is mobile-first design?",
+      "answer": "Designing for mobile screens first, then scaling up for larger screens."
+    },
+    {
+      "question": "What is critical rendering path?",
+      "answer": "The steps browser takes to convert HTML, CSS, and JS into pixels."
+    },
+    {
+      "question": "What is repaint vs reflow?",
+      "answer": "Repaint updates visuals; reflow recalculates layout and is more expensive."
+    },
+    {
+      "question": "How to optimize CSS performance?",
+      "answer": "Avoid deep selectors, minimize reflows, use transform instead of top/left."
+    },
+    {
+      "question": "What is lazy loading images?",
+      "answer": "Loading images only when they enter the viewport to improve performance."
+    },
+    {
+      "question": "What is aspect-ratio?",
+      "answer": "aspect-ratio preserves width-height ratio of elements like images and videos."
+    },
+    {
+      "question": "What is font-display?",
+      "answer": "Controls font loading behavior like swap, block, or fallback."
+    },
+    {
+      "question": "What is CSS reset?",
+      "answer": "A reset removes default browser styles to ensure consistency."
+    },
+    {
+      "question": "What is normalize.css?",
+      "answer": "Normalize.css makes browser styles consistent without removing useful defaults."
+    },
+    {
+      "question": "What is object-fit?",
+      "answer": "Controls how images/videos fit inside containers (cover, contain)."
+    },
+    {
+      "question": "What is sticky positioning?",
+      "answer": "sticky positions an element based on scroll until a threshold is met."
+    },
+    {
+      "question": "What are web-safe fonts?",
+      "answer": "Fonts supported across browsers without external loading, like Arial and Times New Roman."
+    },
+    {
+      "question": "Difference between em and rem?",
+      "answer": "em is relative to parent font-size; rem is relative to root font-size."
+    }
+  ]
+}
