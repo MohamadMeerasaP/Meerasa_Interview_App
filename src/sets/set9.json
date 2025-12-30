@@ -1,0 +1,145 @@
+{
+  "setName": "MySQL",
+  "data": [
+    {
+      "question": "What is MySQL?",
+      "answer": "MySQL is an open-source relational database management system (RDBMS) that uses SQL to manage structured data."
+    },
+    {
+      "question": "What is a database?",
+      "answer": "A database is an organized collection of data that can be easily accessed, managed, and updated."
+    },
+    {
+      "question": "What is a table in MySQL?",
+      "answer": "A table stores data in rows and columns, similar to a spreadsheet."
+    },
+    {
+      "question": "What is a primary key?",
+      "answer": "A primary key uniquely identifies each row in a table and cannot contain NULL values."
+    },
+    {
+      "question": "What is a foreign key?",
+      "answer": "A foreign key creates a relationship between two tables by referencing a primary key in another table."
+    },
+    {
+      "question": "Difference between DELETE and TRUNCATE?",
+      "answer": "DELETE removes rows one by one and can be rolled back; TRUNCATE removes all rows instantly and cannot be rolled back."
+    },
+    {
+      "question": "What is an index?",
+      "answer": "An index improves query performance by allowing faster data retrieval."
+    },
+    {
+      "question": "Types of indexes in MySQL?",
+      "answer": "Primary index, unique index, composite index, full-text index."
+    },
+    {
+      "question": "What is normalization?",
+      "answer": "Normalization organizes data to reduce redundancy and improve data integrity."
+    },
+    {
+      "question": "What is denormalization?",
+      "answer": "Denormalization adds redundancy to improve read performance."
+    },
+    {
+      "question": "What are SQL constraints?",
+      "answer": "Constraints enforce rules on data like NOT NULL, UNIQUE, CHECK, DEFAULT, and FOREIGN KEY."
+    },
+    {
+      "question": "What is JOIN?",
+      "answer": "JOIN combines rows from multiple tables based on a related column."
+    },
+    {
+      "question": "Types of JOINs?",
+      "answer": "INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN (not directly supported in MySQL)."
+    },
+    {
+      "question": "INNER JOIN vs LEFT JOIN?",
+      "answer": "INNER JOIN returns matching rows; LEFT JOIN returns all rows from the left table."
+    },
+    {
+      "question": "What is GROUP BY?",
+      "answer": "GROUP BY groups rows that have the same values in specified columns."
+    },
+    {
+      "question": "What is HAVING?",
+      "answer": "HAVING filters grouped data after GROUP BY."
+    },
+    {
+      "question": "WHERE vs HAVING?",
+      "answer": "WHERE filters rows before grouping; HAVING filters groups after grouping."
+    },
+    {
+      "question": "What is a subquery?",
+      "answer": "A query nested inside another query."
+    },
+    {
+      "question": "What is a view?",
+      "answer": "A virtual table created using a SELECT query."
+    },
+    {
+      "question": "What is a stored procedure?",
+      "answer": "A precompiled set of SQL statements stored in the database."
+    },
+    {
+      "question": "What is a trigger?",
+      "answer": "A trigger executes automatically in response to INSERT, UPDATE, or DELETE events."
+    },
+    {
+      "question": "What is ACID property?",
+      "answer": "Atomicity, Consistency, Isolation, Durability ensure reliable transactions."
+    },
+    {
+      "question": "What is a transaction?",
+      "answer": "A sequence of SQL operations executed as a single unit."
+    },
+    {
+      "question": "What is COMMIT?",
+      "answer": "COMMIT permanently saves changes made in a transaction."
+    },
+    {
+      "question": "What is ROLLBACK?",
+      "answer": "ROLLBACK undoes changes made during a transaction."
+    },
+    {
+      "question": "What is AUTO_INCREMENT?",
+      "answer": "Automatically generates a unique number for new rows."
+    },
+    {
+      "question": "What is NULL?",
+      "answer": "NULL represents missing or unknown data."
+    },
+    {
+      "question": "COUNT(*) vs COUNT(column)?",
+      "answer": "COUNT(*) counts all rows; COUNT(column) ignores NULL values."
+    },
+    {
+      "question": "What is DISTINCT?",
+      "answer": "DISTINCT removes duplicate rows from query results."
+    },
+    {
+      "question": "What is LIMIT?",
+      "answer": "LIMIT restricts the number of rows returned by a query."
+    },
+    {
+      "question": "What is OFFSET?",
+      "answer": "OFFSET skips a specified number of rows before returning results."
+    },
+    {
+      "question": "CHAR vs VARCHAR?",
+      "answer": "CHAR has fixed length; VARCHAR has variable length."
+    },
+    {
+      "question": "What is indexing downside?",
+      "answer": "Indexes improve reads but slow down writes and use extra memory."
+    },
+    {
+      "question": "What is MySQL engine?",
+      "answer": "A storage engine manages how data is stored and retrieved, e.g., InnoDB, MyISAM."
+    },
+    {
+      "question": "InnoDB vs MyISAM?",
+      "answer": "InnoDB supports transactions and foreign keys; MyISAM does not."
+    }
+  ]
+}
