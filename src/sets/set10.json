@@ -1,0 +1,141 @@
+{
+  "setName": "PostgreSQL",
+  "data": [
+    {
+      "question": "What is PostgreSQL?",
+      "answer": "PostgreSQL is an open-source, advanced relational database system known for reliability, extensibility, and SQL compliance."
+    },
+    {
+      "question": "PostgreSQL vs MySQL?",
+      "answer": "PostgreSQL supports advanced features like JSONB, full ACID compliance, complex queries, and custom data types, while MySQL focuses on speed and simplicity."
+    },
+    {
+      "question": "What is ACID compliance?",
+      "answer": "ACID ensures Atomicity, Consistency, Isolation, and Durability for reliable transactions."
+    },
+    {
+      "question": "What is a schema in PostgreSQL?",
+      "answer": "A schema is a namespace that organizes database objects like tables and views."
+    },
+    {
+      "question": "What is JSONB?",
+      "answer": "JSONB is a binary JSON format that allows indexing and faster querying compared to JSON."
+    },
+    {
+      "question": "Difference between JSON and JSONB?",
+      "answer": "JSON stores raw text; JSONB stores binary optimized data with indexing support."
+    },
+    {
+      "question": "What are indexes in PostgreSQL?",
+      "answer": "Indexes improve query performance by enabling faster data lookup."
+    },
+    {
+      "question": "Types of indexes in PostgreSQL?",
+      "answer": "B-tree, Hash, GIN, GiST, SP-GiST, and BRIN."
+    },
+    {
+      "question": "What is a primary key?",
+      "answer": "A primary key uniquely identifies each row and cannot be NULL."
+    },
+    {
+      "question": "What is a foreign key?",
+      "answer": "A foreign key enforces relationships between tables."
+    },
+    {
+      "question": "What is a sequence?",
+      "answer": "A sequence generates unique numeric values, commonly used for IDs."
+    },
+    {
+      "question": "What is SERIAL?",
+      "answer": "SERIAL is a shortcut for creating auto-incrementing integer columns."
+    },
+    {
+      "question": "What is BIGSERIAL?",
+      "answer": "BIGSERIAL generates large auto-incrementing integers."
+    },
+    {
+      "question": "What is a view?",
+      "answer": "A virtual table created from a SELECT query."
+    },
+    {
+      "question": "What is a materialized view?",
+      "answer": "A materialized view stores query results physically for faster access."
+    },
+    {
+      "question": "What is JOIN?",
+      "answer": "JOIN combines rows from multiple tables based on related columns."
+    },
+    {
+      "question": "Types of JOINs?",
+      "answer": "INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN."
+    },
+    {
+      "question": "What is GROUP BY?",
+      "answer": "GROUP BY aggregates rows sharing common values."
+    },
+    {
+      "question": "HAVING vs WHERE?",
+      "answer": "WHERE filters rows before grouping; HAVING filters groups after aggregation."
+    },
+    {
+      "question": "What is a transaction?",
+      "answer": "A sequence of operations executed as a single logical unit."
+    },
+    {
+      "question": "What is MVCC?",
+      "answer": "Multi-Version Concurrency Control allows concurrent reads and writes without locking."
+    },
+    {
+      "question": "What is vacuum?",
+      "answer": "VACUUM reclaims storage and improves performance by cleaning dead tuples."
+    },
+    {
+      "question": "VACUUM vs AUTOVACUUM?",
+      "answer": "VACUUM is manual; AUTOVACUUM runs automatically in the background."
+    },
+    {
+      "question": "What is a stored function?",
+      "answer": "A reusable function written in SQL or PL/pgSQL stored in the database."
+    },
+    {
+      "question": "What is PL/pgSQL?",
+      "answer": "PostgreSQL’s procedural language for writing stored functions."
+    },
+    {
+      "question": "What is a trigger?",
+      "answer": "A trigger automatically executes a function in response to table events."
+    },
+    {
+      "question": "What is Explain?",
+      "answer": "EXPLAIN shows the query execution plan used by PostgreSQL."
+    },
+    {
+      "question": "What is Explain Analyze?",
+      "answer": "EXPLAIN ANALYZE executes the query and shows actual runtime statistics."
+    },
+    {
+      "question": "What is partitioning?",
+      "answer": "Partitioning splits large tables into smaller, manageable pieces."
+    },
+    {
+      "question": "Types of partitioning?",
+      "answer": "Range, List, and Hash partitioning."
+    },
+    {
+      "question": "What is replication?",
+      "answer": "Replication copies data from one database server to another for high availability."
+    },
+    {
+      "question": "What is streaming replication?",
+      "answer": "Continuously replicates data changes from primary to standby server."
+    },
+    {
+      "question": "What is a role?",
+      "answer": "A role represents a user or group with specific permissions."
+    },
+    {
+      "question": "How do you secure PostgreSQL?",
+      "answer": "Using roles, privileges, SSL, pg_hba.conf, and strong authentication."
+    }
+  ]
+}
