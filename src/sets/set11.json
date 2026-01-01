@@ -1,0 +1,161 @@
+{
+  "setName": "Python",
+  "data": [
+    {
+      "question": "What is Python?",
+      "answer": "Python is a high-level, interpreted, dynamically typed programming language known for readability and simplicity."
+    },
+    {
+      "question": "Why is Python popular?",
+      "answer": "Because of its simple syntax, large ecosystem, cross-platform support, and strong community."
+    },
+    {
+      "question": "Is Python compiled or interpreted?",
+      "answer": "Python is interpreted, but internally it compiles code to bytecode before execution."
+    },
+    {
+      "question": "What are Python’s key features?",
+      "answer": "Dynamic typing, automatic memory management, object-oriented support, and extensive libraries."
+    },
+    {
+      "question": "What is PEP 8?",
+      "answer": "PEP 8 is the official Python style guide for writing readable and consistent code."
+    },
+    {
+      "question": "What are variables in Python?",
+      "answer": "Variables are references to objects and do not require explicit type declaration."
+    },
+    {
+      "question": "Mutable vs Immutable objects?",
+      "answer": "Mutable objects can be changed (list, dict); immutable objects cannot (int, tuple, string)."
+    },
+    {
+      "question": "What is a list?",
+      "answer": "A list is an ordered, mutable collection of elements."
+    },
+    {
+      "question": "What is a tuple?",
+      "answer": "A tuple is an ordered, immutable collection of elements."
+    },
+    {
+      "question": "Difference between list and tuple?",
+      "answer": "Lists are mutable and slower; tuples are immutable and faster."
+    },
+    {
+      "question": "What is a dictionary?",
+      "answer": "A dictionary stores key-value pairs and allows fast lookups."
+    },
+    {
+      "question": "What is a set?",
+      "answer": "A set is an unordered collection of unique elements."
+    },
+    {
+      "question": "What is slicing?",
+      "answer": "Slicing extracts a portion of a sequence using start:end:step."
+    },
+    {
+      "question": "What is a function?",
+      "answer": "A function is a reusable block of code defined using the def keyword."
+    },
+    {
+      "question": "What are *args and **kwargs?",
+      "answer": "*args handles variable positional arguments; **kwargs handles keyword arguments."
+    },
+    {
+      "question": "What is lambda function?",
+      "answer": "A lambda is an anonymous one-line function."
+    },
+    {
+      "question": "What is list comprehension?",
+      "answer": "A concise way to create lists using expressions."
+    },
+    {
+      "question": "What is generator?",
+      "answer": "A generator yields values one at a time using the yield keyword."
+    },
+    {
+      "question": "Difference between iterator and generator?",
+      "answer": "Generators are a simpler way to create iterators using yield."
+    },
+    {
+      "question": "What is exception handling?",
+      "answer": "Handling runtime errors using try, except, else, and finally blocks."
+    },
+    {
+      "question": "What is the Global Interpreter Lock (GIL)?",
+      "answer": "GIL allows only one thread to execute Python bytecode at a time."
+    },
+    {
+      "question": "Multithreading vs Multiprocessing?",
+      "answer": "Multithreading shares memory; multiprocessing runs processes in parallel using separate memory."
+    },
+    {
+      "question": "What is a module?",
+      "answer": "A module is a file containing Python code that can be imported."
+    },
+    {
+      "question": "What is a package?",
+      "answer": "A package is a collection of Python modules."
+    },
+    {
+      "question": "What is __init__.py?",
+      "answer": "It marks a directory as a Python package."
+    },
+    {
+      "question": "What is OOP in Python?",
+      "answer": "Object-Oriented Programming organizes code using classes and objects."
+    },
+    {
+      "question": "What is a class?",
+      "answer": "A blueprint for creating objects."
+    },
+    {
+      "question": "What is self?",
+      "answer": "self refers to the current object instance."
+    },
+    {
+      "question": "What is inheritance?",
+      "answer": "A mechanism where a class inherits properties of another class."
+    },
+    {
+      "question": "What is polymorphism?",
+      "answer": "The ability to use a single interface for different data types."
+    },
+    {
+      "question": "What is encapsulation?",
+      "answer": "Restricting access to internal data using access modifiers."
+    },
+    {
+      "question": "What is abstraction?",
+      "answer": "Hiding implementation details and exposing only essential features."
+    },
+    {
+      "question": "What is file handling?",
+      "answer": "Reading and writing files using open(), read(), write(), close()."
+    },
+    {
+      "question": "What is with statement?",
+      "answer": "Used for resource management and automatic file closing."
+    },
+    {
+      "question": "What is virtual environment?",
+      "answer": "An isolated environment to manage project dependencies."
+    },
+    {
+      "question": "pip vs conda?",
+      "answer": "pip manages Python packages; conda manages packages and environments."
+    },
+    {
+      "question": "What is Python used for?",
+      "answer": "Web development, data science, automation, AI/ML, scripting, and backend services."
+    },
+    {
+      "question": "What is Duck Typing?",
+      "answer": "If an object behaves like a duck, it’s treated as a duck regardless of its type."
+    },
+    {
+      "question": "What is memory management in Python?",
+      "answer": "Python uses reference counting and garbage collection."
+    }
+  ]
+}
