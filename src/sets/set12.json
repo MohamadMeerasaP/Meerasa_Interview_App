@@ -1,0 +1,85 @@
+{
+  "setName": "HTML & CSS Coding Scenarios",
+  "data": [
+    {
+      "question": "Create a responsive two-column layout without media queries.",
+      "answer": "Use CSS Grid with auto-fit and minmax: grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));"
+    },
+    {
+      "question": "Center a div horizontally and vertically.",
+      "answer": "Use Flexbox: display:flex; justify-content:center; align-items:center;"
+    },
+    {
+      "question": "Create a sticky header that stays on top while scrolling.",
+      "answer": "Use position: sticky; top: 0; z-index: 100;"
+    },
+    {
+      "question": "Prevent layout shift when loading images.",
+      "answer": "Define width and height attributes or use CSS aspect-ratio."
+    },
+    {
+      "question": "Create a card hover effect with smooth animation.",
+      "answer": "Use transition and transform: translateY() or scale()."
+    },
+    {
+      "question": "Make text truncate with ellipsis.",
+      "answer": "Use overflow:hidden; white-space:nowrap; text-overflow:ellipsis;"
+    },
+    {
+      "question": "Build a responsive navbar without JavaScript.",
+      "answer": "Use Flexbox/Grid with wrap and checkbox hack for toggles."
+    },
+    {
+      "question": "Difference between display:none and visibility:hidden?",
+      "answer": "display:none removes element from layout; visibility:hidden keeps space."
+    },
+    {
+      "question": "Create equal-height columns.",
+      "answer": "Use Flexbox or Grid — both handle equal heights automatically."
+    },
+    {
+      "question": "Implement dark mode using CSS only.",
+      "answer": "Use CSS variables and toggle a class on body."
+    },
+    {
+      "question": "Make an element fixed at bottom only on mobile.",
+      "answer": "Use media queries with position: fixed inside max-width."
+    },
+    {
+      "question": "Difference between rem and em?",
+      "answer": "rem is relative to root; em is relative to parent."
+    },
+    {
+      "question": "Create a circular avatar image.",
+      "answer": "Use border-radius: 50% with fixed width and height."
+    },
+    {
+      "question": "How to align items to the bottom of a container?",
+      "answer": "Use align-items: flex-end in Flexbox."
+    },
+    {
+      "question": "Fix overflow issues on mobile devices.",
+      "answer": "Use max-width:100%; overflow-x:hidden; and responsive units."
+    },
+    {
+      "question": "Create a CSS-only tooltip.",
+      "answer": "Use :hover with ::after pseudo-element."
+    },
+    {
+      "question": "Difference between inline-block and flex?",
+      "answer": "Flex provides alignment control; inline-block does not."
+    },
+    {
+      "question": "How to optimize CSS for performance?",
+      "answer": "Avoid deep selectors, use reusable classes, reduce repaint/reflow."
+    },
+    {
+      "question": "Create a skeleton loader using CSS.",
+      "answer": "Use animated gradient with keyframes."
+    },
+    {
+      "question": "How to create a diagonal background section?",
+      "answer": "Use transform: skewY() or clip-path."
+    }
+  ]
+}
