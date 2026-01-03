@@ -1,0 +1,85 @@
+{
+  "setName": "Real Interview UI Problems",
+  "data": [
+    {
+      "question": "How do you close a modal when clicking outside?",
+      "answer": "Attach click handler to backdrop and check event.target === backdrop."
+    },
+    {
+      "question": "Implement infinite scrolling UI.",
+      "answer": "Use IntersectionObserver to detect when user reaches bottom."
+    },
+    {
+      "question": "Prevent button double submission.",
+      "answer": "Disable button while API request is in progress."
+    },
+    {
+      "question": "Create a debounce search input.",
+      "answer": "Use setTimeout and clearTimeout inside onChange."
+    },
+    {
+      "question": "Handle loading state without blocking UI.",
+      "answer": "Use skeleton loaders instead of spinners."
+    },
+    {
+      "question": "Create a responsive table for mobile.",
+      "answer": "Switch table to card layout using conditional rendering."
+    },
+    {
+      "question": "Implement copy-to-clipboard feature.",
+      "answer": "Use navigator.clipboard.writeText()."
+    },
+    {
+      "question": "Show toast notification after action.",
+      "answer": "Use temporary state with timeout for auto-dismiss."
+    },
+    {
+      "question": "How to highlight search keywords in results?",
+      "answer": "Split string and wrap matched text with span."
+    },
+    {
+      "question": "Handle empty state UI properly.",
+      "answer": "Show descriptive message and CTA instead of blank screen."
+    },
+    {
+      "question": "Create pagination UI for mobile.",
+      "answer": "Show current, next, previous pages with ellipsis."
+    },
+    {
+      "question": "Prevent layout shift during API calls.",
+      "answer": "Reserve space using skeletons or fixed containers."
+    },
+    {
+      "question": "How to manage focus for accessibility?",
+      "answer": "Use tabIndex, aria-labels, and focus trapping in modals."
+    },
+    {
+      "question": "Implement theme switcher (light/dark).",
+      "answer": "Store theme in localStorage and toggle class on body."
+    },
+    {
+      "question": "Improve perceived performance.",
+      "answer": "Use skeleton loaders, lazy loading, and optimistic UI."
+    },
+    {
+      "question": "Handle long text overflow in cards.",
+      "answer": "Use line-clamp or truncate with show more option."
+    },
+    {
+      "question": "Create reusable UI components.",
+      "answer": "Abstract UI into props-driven components."
+    },
+    {
+      "question": "How to show error UI gracefully?",
+      "answer": "Display friendly error message with retry option."
+    },
+    {
+      "question": "Implement keyboard shortcuts.",
+      "answer": "Listen to keydown events and map actions."
+    },
+    {
+      "question": "How to structure UI for scalability?",
+      "answer": "Use atomic components, clear folder structure, and separation of concerns."
+    }
+  ]
+}
