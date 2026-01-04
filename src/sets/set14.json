@@ -1,0 +1,85 @@
+{
+  "setName": "Real Backend Interview Problems",
+  "data": [
+    {
+      "question": "How would you handle millions of users logging in?",
+      "answer": "Use load balancers, stateless auth, Redis caching, and horizontal scaling."
+    },
+    {
+      "question": "Design an API for real-time notifications.",
+      "answer": "Use WebSockets or message queues like RabbitMQ."
+    },
+    {
+      "question": "How do you ensure data consistency in microservices?",
+      "answer": "Use eventual consistency and message queues."
+    },
+    {
+      "question": "How do you rollback a failed transaction?",
+      "answer": "Use database transactions or compensating actions."
+    },
+    {
+      "question": "Design an API for uploading large files.",
+      "answer": "Use chunk uploads or direct upload to cloud storage."
+    },
+    {
+      "question": "How do you secure sensitive data at rest?",
+      "answer": "Encrypt data using AES and secure keys with environment secrets."
+    },
+    {
+      "question": "How do you prevent server crashes?",
+      "answer": "Use PM2, proper error handling, and monitoring."
+    },
+    {
+      "question": "Explain graceful shutdown in Node.js.",
+      "answer": "Stop accepting new requests and complete ongoing ones before exit."
+    },
+    {
+      "question": "How do you scale a Node.js application?",
+      "answer": "Use clustering, load balancers, and containerization."
+    },
+    {
+      "question": "Design audit logging for critical actions.",
+      "answer": "Store userId, action, timestamp, and metadata."
+    },
+    {
+      "question": "How do you detect memory leaks?",
+      "answer": "Use heap snapshots and monitoring tools."
+    },
+    {
+      "question": "How do you handle long-running jobs?",
+      "answer": "Offload tasks to background queues like Bull or RabbitMQ."
+    },
+    {
+      "question": "How do you design a notification retry mechanism?",
+      "answer": "Use exponential backoff with retry limits."
+    },
+    {
+      "question": "How do you implement API throttling per user?",
+      "answer": "Track usage by userId using Redis counters."
+    },
+    {
+      "question": "How do you ensure backward compatibility?",
+      "answer": "Maintain older API versions and deprecate gradually."
+    },
+    {
+      "question": "How do you secure internal APIs?",
+      "answer": "Use service-to-service authentication with tokens."
+    },
+    {
+      "question": "How do you monitor backend performance?",
+      "answer": "Use APM tools like New Relic or Prometheus."
+    },
+    {
+      "question": "How do you handle partial failures?",
+      "answer": "Use circuit breakers and fallback logic."
+    },
+    {
+      "question": "Design a search API efficiently.",
+      "answer": "Use indexing, full-text search, or Elasticsearch."
+    },
+    {
+      "question": "How do you prevent duplicate database records?",
+      "answer": "Use unique indexes and transactional logic."
+    }
+  ]
+}
