@@ -130,14 +130,23 @@ export default function InterviewSetsApp() {
   }
 
   function markAsReviewed(questionId) {
-    setReviewedQuestions((prev) => ({
-      ...prev,
-      [selectedSetId]: {
-        ...(prev[selectedSetId] || {}),
-        [questionId]: true,
-      },
-    }))
+    setReviewedQuestions((prev) => {
+      const currentSet = prev[selectedSetId] || {}
+      const updatedSet = { ...currentSet }
+
+      if (updatedSet[questionId]) {
+        delete updatedSet[questionId]
+      } else {
+        updatedSet[questionId] = true
+      }
+
+      return {
+        ...prev,
+        [selectedSetId]: updatedSet,
+      }
+    })
   }
+
 
   function getReviewedCount() {
     if (!selectedSetId) return 0
