@@ -13,7 +13,7 @@ const STORAGE_KEYS = {
 }
 
 export default function InterviewSetsApp() {
-  const MAX_SETS = 6
+  const MAX_SETS = 20
   const [availableSets, setAvailableSets] = useState([])
   const [selectedSetId, setSelectedSetId] = useState(null)
   const [qaList, setQaList] = useState([])
