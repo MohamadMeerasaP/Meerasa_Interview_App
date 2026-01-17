@@ -24,6 +24,7 @@ export default function InterviewSetsApp() {
   const [starFilter, setStarFilter] = useState("all") // "all" or "starred"
 
   const [reviewedQuestions, setReviewedQuestions] = useState({})
+  const [isHydrated, setIsHydrated] = useState(false)
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1)
@@ -64,21 +65,25 @@ export default function InterviewSetsApp() {
 
     if (savedQuery) setQuery(savedQuery)
     if (savedPage) setCurrentPage(Number(savedPage))
+
     if (savedStarred) {
       try {
         setStarredQuestions(new Set(JSON.parse(savedStarred)))
-      } catch {}
+      } catch { }
     }
+
     if (savedReviewed) {
       try {
         setReviewedQuestions(JSON.parse(savedReviewed))
-      } catch {}
+      } catch { }
     }
 
-    // Set selected set after availableSets is populated
     if (savedSetId) {
       setTimeout(() => setSelectedSetId(Number(savedSetId)), 100)
     }
+
+    // ✅ IMPORTANT
+    setIsHydrated(true)
   }, [])
 
   useEffect(() => {
@@ -100,8 +105,13 @@ export default function InterviewSetsApp() {
   }, [starredQuestions])
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.REVIEWED_QUESTIONS, JSON.stringify(reviewedQuestions))
-  }, [reviewedQuestions])
+    if (!isHydrated) return
+
+    localStorage.setItem(
+      STORAGE_KEYS.REVIEWED_QUESTIONS,
+      JSON.stringify(reviewedQuestions)
+    )
+  }, [reviewedQuestions, isHydrated])
 
   function toggleStar(questionId) {
     setStarredQuestions((prev) => {
@@ -165,7 +175,7 @@ export default function InterviewSetsApp() {
           const json = mod.default ?? mod
           const name = json?.setName ?? `Set ${i}`
           if (mounted) detected.push({ id: i, name })
-        } catch {}
+        } catch { }
       }
 
       if (mounted) {
@@ -565,9 +575,8 @@ export default function InterviewSetsApp() {
                     setStarFilter("all")
                     setCurrentPage(1)
                   }}
-                  className={`px-3 py-1.5 rounded text-xs font-medium transition ${
-                    starFilter === "all" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className={`px-3 py-1.5 rounded text-xs font-medium transition ${starFilter === "all" ? "bg-white text-indigo-600 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                    }`}
                 >
                   All
                 </button>
@@ -576,11 +585,10 @@ export default function InterviewSetsApp() {
                     setStarFilter("starred")
                     setCurrentPage(1)
                   }}
-                  className={`px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1 ${
-                    starFilter === "starred"
-                      ? "bg-white text-indigo-600 shadow-sm"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className={`px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1 ${starFilter === "starred"
+                    ? "bg-white text-indigo-600 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+                    }`}
                 >
                   <span>⭐</span> Starred
                 </button>
@@ -633,13 +641,12 @@ export default function InterviewSetsApp() {
                       return (
                         <tr
                           key={idx}
-                          className={`transition ${
-                            isHighlighted
-                              ? "bg-indigo-100 ring-2 ring-indigo-400"
-                              : isReviewed
-                                ? "odd:bg-green-50/50 even:bg-green-100/50 hover:bg-indigo-50/40"
-                                : "odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40"
-                          }`}
+                          className={`transition ${isHighlighted
+                            ? "bg-indigo-100 ring-2 ring-indigo-400"
+                            : isReviewed
+                              ? "odd:bg-green-50/50 even:bg-green-100/50 hover:bg-indigo-50/40"
+                              : "odd:bg-white even:bg-slate-50 hover:bg-indigo-50/40"
+                            }`}
                           onClick={() => {
                             markAsReviewed(questionId)
                             setHighlightedIndex(idx)
@@ -722,9 +729,8 @@ export default function InterviewSetsApp() {
                   return (
                     <div
                       key={idx}
-                      className={`border rounded-xl shadow-sm p-4 transition-all ${
-                        isReviewed ? "bg-green-50 border-green-200" : "bg-white hover:shadow-md"
-                      }`}
+                      className={`border rounded-xl shadow-sm p-4 transition-all ${isReviewed ? "bg-green-50 border-green-200" : "bg-white hover:shadow-md"
+                        }`}
                       onClick={() => markAsReviewed(questionId)}
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
@@ -788,10 +794,9 @@ export default function InterviewSetsApp() {
                 onClick={() => goToPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
                 className={`px-3 sm:px-4 py-2 rounded-lg border text-xs sm:text-sm transition
-                  ${
-                    currentPage === 1
-                      ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-white border-slate-300 hover:bg-indigo-100"
+                  ${currentPage === 1
+                    ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                    : "bg-white border-slate-300 hover:bg-indigo-100"
                   }`}
               >
                 <span className="hidden sm:inline">Prev</span>
@@ -817,10 +822,9 @@ export default function InterviewSetsApp() {
                         <button
                           onClick={() => goToPage(page)}
                           className={`px-3 sm:px-4 py-2 rounded-lg border text-xs sm:text-sm shadow-sm transition
-                            ${
-                              currentPage === page
-                                ? "bg-indigo-600 text-white border-indigo-600 shadow"
-                                : "bg-white border-slate-300 hover:bg-indigo-100"
+                            ${currentPage === page
+                              ? "bg-indigo-600 text-white border-indigo-600 shadow"
+                              : "bg-white border-slate-300 hover:bg-indigo-100"
                             }`}
                         >
                           {page}
@@ -835,10 +839,9 @@ export default function InterviewSetsApp() {
                 onClick={() => goToPage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
                 className={`px-3 sm:px-4 py-2 rounded-lg border text-xs sm:text-sm transition
-                  ${
-                    currentPage === totalPages
-                      ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-white border-slate-300 hover:bg-indigo-100"
+                  ${currentPage === totalPages
+                    ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                    : "bg-white border-slate-300 hover:bg-indigo-100"
                   }`}
               >
                 <span className="hidden sm:inline">Next</span>
@@ -856,36 +859,36 @@ export default function InterviewSetsApp() {
           )}
 
           {/* Footer */}
-        <div className="mt-10 border-t pt-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
-            
-            {/* Left */}
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500" />
-              <span>
-                © {new Date().getFullYear()}{" "}
-                <span className="font-medium text-slate-700">
-                  Meerasa’s Interview Prep
-                </span>
-              </span>
-            </div>
+          <div className="mt-10 border-t pt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
 
-            {/* Right */}
-            <div className="flex items-center gap-2 text-slate-400">
-              <div className="text-center">
-              Crafted with ❤️ by{" "}
-              <a
-                href="https://meerasaportfolios.web.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-indigo-600 hover:text-indigo-700 underline underline-offset-4 transition"
-              >
-                Mohamad Meerasa
-              </a>
-            </div>
+              {/* Left */}
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500" />
+                <span>
+                  © {new Date().getFullYear()}{" "}
+                  <span className="font-medium text-slate-700">
+                    Meerasa’s Interview Prep
+                  </span>
+                </span>
+              </div>
+
+              {/* Right */}
+              <div className="flex items-center gap-2 text-slate-400">
+                <div className="text-center">
+                  Crafted with ❤️ by{" "}
+                  <a
+                    href="https://meerasaportfolios.web.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-indigo-600 hover:text-indigo-700 underline underline-offset-4 transition"
+                  >
+                    Mohamad Meerasa
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
 
