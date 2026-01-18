@@ -101,8 +101,17 @@ export default function InterviewSetsApp() {
   }, [currentPage])
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.STARRED_QUESTIONS, JSON.stringify([...starredQuestions]))
-  }, [starredQuestions])
+    if (!isHydrated) return
+
+    localStorage.setItem(
+      STORAGE_KEYS.STARRED_QUESTIONS,
+      JSON.stringify(starredQuestions)
+    )
+  }, [starredQuestions, isHydrated])
+
+  // useEffect(() => {
+  //   localStorage.setItem(STORAGE_KEYS.STARRED_QUESTIONS, JSON.stringify([...starredQuestions]))
+  // }, [starredQuestions])
 
   useEffect(() => {
     if (!isHydrated) return
