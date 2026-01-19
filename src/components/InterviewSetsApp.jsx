@@ -262,13 +262,20 @@ export default function InterviewSetsApp() {
   }
 
   function clearSelection() {
+    Object.values(STORAGE_KEYS).forEach((key) => {
+      localStorage.removeItem(key)
+    })
+
     setSelectedSetId(null)
     setQuery("")
     setQaList([])
     setCurrentPage(1)
     setStarFilter("all")
     setHighlightedIndex(0)
+    setStarredQuestions(new Set())
+    setReviewedQuestions({})
   }
+
 
   useEffect(() => {
     function handleKeyDown(e) {
