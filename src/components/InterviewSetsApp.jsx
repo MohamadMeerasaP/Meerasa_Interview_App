@@ -102,10 +102,9 @@ export default function InterviewSetsApp() {
 
   useEffect(() => {
     if (!isHydrated) return
-
     localStorage.setItem(
       STORAGE_KEYS.STARRED_QUESTIONS,
-      JSON.stringify(starredQuestions)
+      JSON.stringify([...starredQuestions])
     )
   }, [starredQuestions, isHydrated])
 
