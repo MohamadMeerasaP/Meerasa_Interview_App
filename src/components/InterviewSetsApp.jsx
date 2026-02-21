@@ -142,7 +142,7 @@ export default function InterviewSetsApp() {
     }
   }
 
-   function resetData() {
+  function resetData() {
     if (selectedSetId) {
       setShowClearDataModal(true)
     }
@@ -967,6 +967,8 @@ export default function InterviewSetsApp() {
       {showClearDataModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+
+            {/* Header */}
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                 <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24">
@@ -979,20 +981,35 @@ export default function InterviewSetsApp() {
                   />
                 </svg>
               </div>
+
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-slate-900">Reset Progress?</h3>
-                <p className="text-sm text-slate-600 mt-1">This will clear all reviewed questions for this topic.</p>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Clear All Data?
+                </h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  This will permanently remove all your saved data.
+                </p>
               </div>
             </div>
 
+            {/* Warning Box */}
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
-              <p className="text-xs text-amber-800">
-                This action cannot be undone. Your progress tracking for{" "}
-                <span className="font-semibold">{availableSets.find((s) => s.id === selectedSetId)?.name}</span> will be
-                reset to 0.
+              <p className="text-xs text-amber-800 leading-relaxed">
+                This action will:
+                <ul className="list-disc ml-5 mt-1 space-y-1">
+                  <li>Clear selected topic</li>
+                  <li>Remove search history</li>
+                  <li>Reset pagination</li>
+                  <li>Delete starred questions</li>
+                  <li>Erase all progress tracking</li>
+                </ul>
+                <span className="block mt-2 font-semibold">
+                  This action cannot be undone.
+                </span>
               </p>
             </div>
 
+            {/* Actions */}
             <div className="flex gap-3">
               <button
                 onClick={() => setShowClearDataModal(false)}
@@ -1000,11 +1017,12 @@ export default function InterviewSetsApp() {
               >
                 Cancel
               </button>
+
               <button
                 onClick={clearSelection}
                 className="flex-1 px-4 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors shadow-lg shadow-red-600/30"
               >
-                Clear All Data
+                Reset Everything
               </button>
             </div>
           </div>
