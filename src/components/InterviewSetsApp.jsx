@@ -39,6 +39,8 @@ export default function InterviewSetsApp() {
 
   const [showClearDataModal, setShowClearDataModal] = useState(false)
 
+  const [confirmText, setConfirmText] = useState("")
+
 
   const sampleSets = {
     1: [
@@ -282,6 +284,7 @@ export default function InterviewSetsApp() {
     setHighlightedIndex(0)
     setStarredQuestions(new Set())
     setReviewedQuestions({})
+    setConfirmText("")
     setShowClearDataModal(false)
   }
 
@@ -966,7 +969,7 @@ export default function InterviewSetsApp() {
 
       {showClearDataModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
 
             {/* Header */}
             <div className="flex items-center gap-4 mb-4">
@@ -982,12 +985,12 @@ export default function InterviewSetsApp() {
                 </svg>
               </div>
 
-              <div className="flex-1">
+              <div>
                 <h3 className="text-lg font-bold text-slate-900">
-                  Clear All Data?
+                  Reset Everything?
                 </h3>
                 <p className="text-sm text-slate-600 mt-1">
-                  This will permanently remove all your saved data.
+                  This will permanently delete all saved data.
                 </p>
               </div>
             </div>
@@ -1009,18 +1012,39 @@ export default function InterviewSetsApp() {
               </p>
             </div>
 
+            {/* Confirmation Input */}
+            <div className="mb-6">
+              <label className="block text-xs font-medium text-slate-600 mb-1">
+                Type <span className="font-bold text-red-600">RESET</span> to confirm
+              </label>
+              <input
+                value={confirmText}
+                onChange={(e) => setConfirmText(e.target.value)}
+                placeholder="RESET"
+                className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-red-400 focus:outline-none"
+              />
+            </div>
+
             {/* Actions */}
             <div className="flex gap-3">
               <button
-                onClick={() => setShowClearDataModal(false)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+                onClick={() => {
+                  setShowClearDataModal(false)
+                  setConfirmText("")
+                }}
+                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition"
               >
                 Cancel
               </button>
 
               <button
                 onClick={clearSelection}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors shadow-lg shadow-red-600/30"
+                disabled={confirmText.trim().toLowerCase() !== "reset"}
+                className={`flex-1 px-4 py-2.5 rounded-lg font-medium transition shadow-lg
+            ${confirmText.trim().toLowerCase() === "reset"
+                    ? "bg-red-600 text-white hover:bg-red-700 shadow-red-600/30"
+                    : "bg-slate-200 text-slate-400 cursor-not-allowed"
+                  }`}
               >
                 Reset Everything
               </button>
