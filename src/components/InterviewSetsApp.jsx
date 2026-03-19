@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react"
 import Logo from "../assets/Logo.png"
+import { API_BASE } from "../config/api";
 
 
 const STORAGE_KEYS = {
@@ -185,65 +186,59 @@ export default function InterviewSetsApp() {
 
   // Detect available sets
   useEffect(() => {
-    let mounted = true
-    async function detect() {
-      const detected = []
-      for (let i = 1; i <= MAX_SETS; i++) {
-        try {
-          const mod = await import(`../sets/set${i}.json`)
-          const json = mod.default ?? mod
-          const name = json?.setName ?? `Set ${i}`
-          if (mounted) detected.push({ id: i, name })
-        } catch { }
-      }
+    let mounted = true;
 
-      if (mounted) {
-        if (detected.length === 0) {
-          const fallback = Object.keys(sampleSets).map((k) => ({
-            id: Number(k),
-            name: `Set ${k} (sample)`,
-          }))
-          setAvailableSets(fallback)
-        } else {
-          setAvailableSets(detected)
+    async function fetchSets() {
+      try {
+        const res = await fetch(`${API_BASE}/api/sets`);
+        const data = await res.json();
+
+        if (mounted) {
+          setAvailableSets(data);
         }
+      } catch (error) {
+        console.error("Failed to fetch sets:", error);
       }
     }
-    detect()
-    return () => (mounted = false)
-  }, [])
+
+    fetchSets();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
 
   // Load selected set with loader
   useEffect(() => {
-    if (!selectedSetId) return
+    if (!selectedSetId) return;
 
-    let mounted = true
-    setLoading(true)
+    let mounted = true;
+    setLoading(true);
 
     async function loadSet() {
-      const delay = new Promise((res) => setTimeout(res, 800))
+      try {
+        const res = await fetch(`${API_BASE}/api/sets/${selectedSetId}`);
 
-      const fetchData = (async () => {
-        try {
-          const mod = await import(`../sets/set${selectedSetId}.json`)
-          const json = mod.default ?? mod
-          return Array.isArray(json) ? json : Array.isArray(json?.data) ? json.data : []
-        } catch {
-          return sampleSets[selectedSetId] ?? []
+        const data = await res.json();
+
+        if (mounted) {
+          setQaList(data);
+          setLoading(false);
         }
-      })()
-
-      const [_, data] = await Promise.all([delay, fetchData])
-
-      if (mounted) {
-        setQaList(data)
-        setLoading(false)
+      } catch (error) {
+        console.error("Failed to load questions:", error);
+        if (mounted) setLoading(false);
       }
     }
 
-    loadSet()
-    return () => (mounted = false)
-  }, [selectedSetId])
+    loadSet();
+
+    return () => {
+      mounted = false;
+    };
+  }, [selectedSetId]);
+
 
   const filtered = qaList.filter((item) => {
     const text = query.toLowerCase()
