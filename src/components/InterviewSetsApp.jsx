@@ -42,6 +42,12 @@ export default function InterviewSetsApp() {
 
   const [confirmText, setConfirmText] = useState("")
 
+  const [globalQuery, setGlobalQuery] = useState("")
+
+  const [globalResults, setGlobalResults] = useState([])
+
+  const [globalLoading, setGlobalLoading] = useState(false)
+
 
   const sampleSets = {
     1: [
@@ -240,6 +246,36 @@ export default function InterviewSetsApp() {
   }, [selectedSetId]);
 
 
+  //Global Search API
+  useEffect(() => {
+    if (!globalQuery.trim()) {
+      setGlobalResults([])
+      return
+    }
+
+    async function fetchSearch() {
+      try {
+        setGlobalLoading(true)
+
+        const res = await fetch(
+          `${API_BASE}/api/questions/search?q=${globalQuery}`
+        )
+
+        const data = await res.json()
+
+        setGlobalResults(data)
+
+      } catch (error) {
+        console.error("Global search failed:", error)
+      } finally {
+        setGlobalLoading(false)
+      }
+    }
+
+    fetchSearch()
+
+  }, [globalQuery])
+
   const filtered = qaList.filter((item) => {
     const text = query.toLowerCase()
     return item.question?.toLowerCase().includes(text) || item.answer?.toLowerCase().includes(text)
@@ -430,6 +466,48 @@ export default function InterviewSetsApp() {
             </div>
           </div>
         </header>
+
+        {/* GLOBAL SEARCH */}
+        <div className="bg-white rounded-xl shadow-md border p-4 sm:p-6 mb-4 sm:mb-6">
+          <h2 className="text-lg font-semibold text-slate-800 mb-3">
+            🌍 Global Search
+          </h2>
+
+          <input
+            placeholder="Search across all interview questions..."
+            value={globalQuery}
+            onChange={(e) => setGlobalQuery(e.target.value)}
+            className="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+          />
+
+          {/* Loader */}
+          {globalLoading && (
+            <p className="text-sm text-slate-500 mt-2">Searching...</p>
+          )}
+
+          {/* Results */}
+          {globalQuery && !globalLoading && (
+            <div className="mt-4 space-y-3 max-h-64 overflow-y-auto">
+              {globalResults.length === 0 ? (
+                <p className="text-sm text-slate-500">No results found</p>
+              ) : (
+                globalResults.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border rounded-lg p-3 hover:bg-indigo-50 transition"
+                  >
+                    <p className="text-sm font-semibold text-slate-800">
+                      {item.question}
+                    </p>
+                    <p className="text-xs text-slate-600 mt-1">
+                      {item.answer}
+                    </p>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
 
         {/* SELECT TOPIC CARD */}
         <div className="bg-white rounded-xl shadow-md border p-4 sm:p-6 mb-4 sm:mb-6">
