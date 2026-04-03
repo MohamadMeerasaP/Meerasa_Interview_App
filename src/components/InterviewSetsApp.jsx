@@ -253,28 +253,36 @@ export default function InterviewSetsApp() {
       return
     }
 
-    async function fetchSearch() {
+    const controller = new AbortController()
+
+    const delay = setTimeout(async () => {
       try {
         setGlobalLoading(true)
 
         const res = await fetch(
-          `${API_BASE}/api/questions/search?q=${globalQuery}`
+          `${API_BASE}/api/questions/search?q=${globalQuery}`,
+          { signal: controller.signal }
         )
 
         const data = await res.json()
-
         setGlobalResults(data)
 
       } catch (error) {
-        console.error("Global search failed:", error)
+        if (error.name !== "AbortError") {
+          console.error("Global search failed:", error)
+        }
       } finally {
         setGlobalLoading(false)
       }
+    }, 400)
+
+    return () => {
+      clearTimeout(delay)
+      controller.abort()
     }
 
-    fetchSearch()
-
   }, [globalQuery])
+
 
   const filtered = qaList.filter((item) => {
     const text = query.toLowerCase()
