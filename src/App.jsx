@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import InterviewSetsApp from "./components/InterviewSetsApp"
 import LandingPage from "./pages/LandingPage"
 import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 import { UserProvider } from "./context/userContext"
 
@@ -19,6 +20,7 @@ export default function App() {
           {/* ✅ NEW LANDING PAGE */}
           <Route path="/home" element={<LandingPage />} />
 
+          <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
         </Routes>
