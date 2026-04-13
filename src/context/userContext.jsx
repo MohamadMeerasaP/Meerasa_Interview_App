@@ -3,28 +3,31 @@ import { supabase } from "../lib/supabase"
 
 export const UserContext = createContext()
 
-export const UserProvider = ({ children }) => {
+export function UserProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser()
-      setUser(data?.user || null)
+    // Restore session on refresh
+    async function loadSession() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+
+      setUser(session?.user || null)
       setLoading(false)
     }
 
-    getUser()
+    loadSession()
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null)
-      }
-    )
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null)
+    })
 
-    return () => {
-      listener.subscription.unsubscribe()
-    }
+    return () => subscription.unsubscribe()
   }, [])
 
   return (
