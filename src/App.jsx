@@ -5,8 +5,8 @@ import InterviewSetsApp from "./components/InterviewSetsApp"
 import LandingPage from "./pages/LandingPage"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-
 import { UserProvider } from "./context/userContext"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 export default function App() {
   return (
@@ -15,7 +15,14 @@ export default function App() {
         <Routes>
 
           {/* ✅ MAIN APP (unchanged) */}
-          <Route path="/" element={<InterviewSetsApp />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <InterviewSetsApp />
+              </ProtectedRoute>
+            }
+          />
 
           {/* ✅ NEW LANDING PAGE */}
           <Route path="/home" element={<LandingPage />} />
