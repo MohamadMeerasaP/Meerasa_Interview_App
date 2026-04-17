@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import Logo from "../assets/Logo.png"
 import { API_BASE } from "../config/api"
+import { supabase } from "../lib/supabase"
 import "./dashboard.css"
 
 import { useContext } from "react";
@@ -126,24 +127,57 @@ export default function InterviewSetsApp() {
      API — global search  (debounced + abortable)
   ──────────────────────────────────────────────── */
   useEffect(() => {
-    if (!globalQuery.trim()) { setGlobalResults([]); return }
+    if (!globalQuery.trim()) {
+      setGlobalResults([])
+      return
+    }
 
     const controller = new AbortController()
+
     const delay = setTimeout(async () => {
       try {
         setGlobalLoading(true)
-        const res = await fetch(`${API_BASE}/api/questions/search?q=${globalQuery}`, { signal: controller.signal })
+
+        // ✅ Get logged-in session token
+        const session = await supabase.auth.getSession()
+        const token = session.data.session?.access_token
+
+        if (!token) {
+          console.error("No auth token found")
+          setGlobalLoading(false)
+          return
+        }
+
+        // ✅ Send token to backend
+        const res = await fetch(
+          `${API_BASE}/api/questions/search?q=${globalQuery}`,
+          {
+            signal: controller.signal,
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
         const data = await res.json()
         setGlobalResults(data)
+
       } catch (error) {
-        if (error.name !== "AbortError") console.error("Global search failed:", error)
+        if (error.name !== "AbortError") {
+          console.error("Global search failed:", error)
+        }
       } finally {
         setGlobalLoading(false)
       }
     }, 400)
 
-    return () => { clearTimeout(delay); controller.abort() }
+    return () => {
+      clearTimeout(delay)
+      controller.abort()
+    }
+
   }, [globalQuery])
+
 
   /* ────────────────────────────────────────────────
      KEYBOARD SHORTCUTS  (unchanged logic)
