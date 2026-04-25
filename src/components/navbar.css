@@ -1,0 +1,210 @@
+/* ════════════════════════════════════════
+   navbar.css
+   Matches dark theme: landing / login / dashboard
+════════════════════════════════════════ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(7, 8, 15, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  /* sits above the dot-grid ::before of .ip-app */
+  isolation: isolate;
+}
+
+/* ── brand ── */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+}
+
+.navbar-brand-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c6f135;
+  box-shadow: 0 0 0 0 rgba(198, 241, 53, 0.25);
+  animation: navDotPulse 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes navDotPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(198, 241, 53, 0.25);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(198, 241, 53, 0);
+    transform: scale(1.15);
+  }
+}
+
+.navbar-brand-name {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #f2f2ff;
+  letter-spacing: -0.01em;
+  transition: color 0.15s;
+}
+
+.navbar-brand:hover .navbar-brand-name {
+  color: #c6f135;
+}
+
+/* ── right section ── */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ── greeting ── */
+.navbar-greeting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.navbar-greeting-hello {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #4a4a70;
+  letter-spacing: 0.04em;
+}
+
+.navbar-greeting-name {
+  font-family: 'Cabinet Grotesk', 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #c6f135;
+  letter-spacing: -0.01em;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── divider ── */
+.navbar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+/* ── logout button ── */
+.navbar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #4a4a70;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  outline: none;
+}
+
+.navbar-logout:hover {
+  background: rgba(240, 68, 104, 0.12);
+  border-color: rgba(240, 68, 104, 0.3);
+  color: #f04468;
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px rgba(240, 68, 104, 0.08);
+}
+
+.navbar-logout:active {
+  transform: scale(0.96);
+}
+
+.navbar-logout:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+/* loading state — subtle pulse on the whole button */
+.navbar-logout.logging-out {
+  border-color: rgba(198, 241, 53, 0.25);
+  animation: logoutPulse 1s ease-in-out infinite;
+}
+
+@keyframes logoutPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(198, 241, 53, 0.1); }
+  50%       { box-shadow: 0 0 0 5px rgba(198, 241, 53, 0); }
+}
+
+/* ── inline spinner (shown while logging out) ── */
+.navbar-spinner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #c6f135;
+  animation: navSpin 0.6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes navSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 18px;
+    height: 58px;
+  }
+
+  .navbar-brand-name {
+    font-size: 15px;
+  }
+
+  /* collapse greeting to name only on mobile */
+  .navbar-greeting-hello {
+    display: none;
+  }
+
+  .navbar-greeting {
+    padding: 6px 12px;
+  }
+
+  .navbar-greeting-name {
+    max-width: 110px;
+  }
+}
+
+@media (max-width: 400px) {
+  /* very small screens — hide full greeting, show icon only */
+  .navbar-greeting {
+    display: none;
+  }
+
+  .navbar-divider {
+    display: none;
+  }
+}
