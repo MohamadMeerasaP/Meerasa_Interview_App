@@ -8,7 +8,8 @@ import "./dashboard.css"
 
 import { useContext } from "react";
 import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar"
 
 
 /* ─── Storage keys (unchanged) ─── */
@@ -296,6 +297,10 @@ export default function InterviewSetsApp() {
   ════════════════════════════════════════════════ */
   return (
     <div className="ip-app">
+
+       {/* ── NAVBAR ── sits above the container, inside ip-app ── */}
+      <Navbar />
+
       <div className="ip-container">
 
         {/* ══════════════════════════════════════
