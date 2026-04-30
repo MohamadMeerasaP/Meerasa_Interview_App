@@ -184,27 +184,44 @@
     font-size: 15px;
   }
 
-  /* collapse greeting to name only on mobile */
+  /* hide "Hello," text — show name only */
   .navbar-greeting-hello {
     display: none;
   }
 
   .navbar-greeting {
-    padding: 6px 12px;
+    padding: 6px 11px;
   }
 
   .navbar-greeting-name {
-    max-width: 110px;
+    max-width: 100px;
+    font-size: 12.5px;
   }
 }
 
 @media (max-width: 400px) {
-  /* very small screens — hide full greeting, show icon only */
-  .navbar-greeting {
-    display: none;
+  .navbar {
+    padding: 0 14px;
   }
 
-  .navbar-divider {
-    display: none;
+  /* keep greeting visible — just tighter */
+  .navbar-greeting {
+    padding: 5px 9px;
+    gap: 0;
+  }
+
+  .navbar-greeting-name {
+    max-width: 80px;
+    font-size: 12px;
+  }
+
+  /* keep divider but narrower gap */
+  .navbar-right {
+    gap: 9px;
+  }
+
+  .navbar-logout {
+    width: 34px;
+    height: 34px;
   }
 }
