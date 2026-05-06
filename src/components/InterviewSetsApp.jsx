@@ -85,6 +85,38 @@ export default function InterviewSetsApp() {
   useEffect(() => { if (!isHydrated) return; localStorage.setItem(STORAGE_KEYS.REVIEWED_QUESTIONS, JSON.stringify(reviewedQuestions)) }, [reviewedQuestions, isHydrated])
 
   /* ────────────────────────────────────────────────
+ API — fetch dashboard stats
+──────────────────────────────────────────────── */
+  const [dashboardStats, setDashboardStats] = useState({
+    totalTopics: 0,
+    totalQuestions: 0,
+  })
+
+  useEffect(() => {
+    let mounted = true
+
+    async function fetchDashboardStats() {
+      try {
+        const res = await fetch(`${API_BASE}/api/dashboard/stats`)
+        const data = await res.json()
+
+        if (mounted) {
+          setDashboardStats(data)
+        }
+
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats:", error)
+      }
+    }
+
+    fetchDashboardStats()
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  /* ────────────────────────────────────────────────
      API — fetch available sets
   ──────────────────────────────────────────────── */
   useEffect(() => {
@@ -298,7 +330,7 @@ export default function InterviewSetsApp() {
   return (
     <div className="ip-app">
 
-       {/* ── NAVBAR ── sits above the container, inside ip-app ── */}
+      {/* ── NAVBAR ── sits above the container, inside ip-app ── */}
       <Navbar />
 
       <div className="ip-container">
@@ -334,19 +366,30 @@ export default function InterviewSetsApp() {
 
             <div className="ip-stats-bar">
               <div className="ip-stat">
-                <span className="ip-stat-val">{availableSets.length}</span>
+                <span className="ip-stat-val">
+                  {dashboardStats.totalTopics || "—"}
+                </span>
                 <span className="ip-stat-lbl">Topics</span>
               </div>
+
               <div className="ip-stat">
-                <span className="ip-stat-val">{qaList.length || "—"}</span>
+                <span className="ip-stat-val">
+                  {dashboardStats.totalQuestions || "—"}
+                </span>
                 <span className="ip-stat-lbl">Q&amp;A</span>
               </div>
+
               <div className="ip-stat">
-                <span className="ip-stat-val">{reviewedCount || "—"}</span>
+                <span className="ip-stat-val">
+                  {reviewedCount || "—"}
+                </span>
                 <span className="ip-stat-lbl">Reviewed</span>
               </div>
+
               <div className="ip-stat">
-                <span className="ip-stat-val">{reviewedPct ? `${reviewedPct}%` : "—"}</span>
+                <span className="ip-stat-val">
+                  {reviewedPct ? `${reviewedPct}%` : "—"}
+                </span>
                 <span className="ip-stat-lbl">Progress</span>
               </div>
             </div>
