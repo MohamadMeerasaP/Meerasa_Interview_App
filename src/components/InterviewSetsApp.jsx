@@ -157,6 +157,67 @@ export default function InterviewSetsApp() {
   }, [selectedSetId])
 
   /* ────────────────────────────────────────────────
+   API — load user progress
+──────────────────────────────────────────────── */
+  useEffect(() => {
+
+    if (!selectedSetId || !user) return
+
+    let mounted = true
+
+    async function fetchProgress() {
+
+      try {
+
+        // get session token
+        const session = await supabase.auth.getSession()
+        const token = session.data.session?.access_token
+
+        if (!token) return
+
+        const res = await fetch(
+          `${API_BASE}/api/progress/${selectedSetId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        const data = await res.json()
+
+        if (!mounted) return
+
+        // convert DB rows → frontend format
+        const progressMap = {}
+
+        data.forEach(item => {
+          if (item.reviewed) {
+            progressMap[`${selectedSetId}-${item.question_id}`] = true
+          }
+        })
+
+        setReviewedQuestions(prev => ({
+          ...prev,
+          [selectedSetId]: progressMap
+        }))
+
+      } catch (error) {
+
+        console.error("Failed to load progress:", error)
+
+      }
+    }
+
+    fetchProgress()
+
+    return () => {
+      mounted = false
+    }
+
+  }, [selectedSetId, user])
+
+  /* ────────────────────────────────────────────────
      API — global search  (debounced + abortable)
   ──────────────────────────────────────────────── */
   useEffect(() => {
