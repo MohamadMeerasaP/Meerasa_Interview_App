@@ -328,12 +328,53 @@ export default function InterviewSetsApp() {
     })
   }
 
-  function markAsReviewed(questionId) {
-    setReviewedQuestions(prev => {
-      const cur = { ...(prev[selectedSetId] || {}) }
-      cur[questionId] ? delete cur[questionId] : (cur[questionId] = true)
-      return { ...prev, [selectedSetId]: cur }
-    })
+  const markAsReviewed = async (questionId) => {
+
+    const alreadyReviewed =
+      reviewedQuestions[selectedSetId]?.[
+      `${selectedSetId}-${questionId}`
+      ]
+
+    // update UI instantly
+    setReviewedQuestions(prev => ({
+      ...prev,
+      [selectedSetId]: {
+        ...prev[selectedSetId],
+        [`${selectedSetId}-${questionId}`]: !alreadyReviewed
+      }
+    }))
+
+    try {
+
+      const session = await supabase.auth.getSession()
+
+      const token = session.data.session?.access_token
+
+      if (!token) return
+
+      await fetch(
+        `${API_BASE}/api/progress`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+
+          body: JSON.stringify({
+            set_id: selectedSetId,
+            question_id: questionId.split("-")[1],
+            reviewed: !alreadyReviewed
+          })
+        }
+      )
+
+    } catch (error) {
+
+      console.error("Save progress failed:", error)
+
+    }
   }
 
   function getReviewedCount() {
