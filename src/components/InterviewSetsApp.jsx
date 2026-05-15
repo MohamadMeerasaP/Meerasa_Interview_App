@@ -331,18 +331,24 @@ export default function InterviewSetsApp() {
   const markAsReviewed = async (questionId) => {
 
     const alreadyReviewed =
-      reviewedQuestions[selectedSetId]?.[
-      `${selectedSetId}-${questionId}`
-      ]
+      reviewedQuestions[selectedSetId]?.[questionId]
 
-    // update UI instantly
-    setReviewedQuestions(prev => ({
-      ...prev,
-      [selectedSetId]: {
-        ...prev[selectedSetId],
-        [`${selectedSetId}-${questionId}`]: !alreadyReviewed
+    // instant UI update
+    setReviewedQuestions(prev => {
+
+      const cur = { ...(prev[selectedSetId] || {}) }
+
+      if (alreadyReviewed) {
+        delete cur[questionId]
+      } else {
+        cur[questionId] = true
       }
-    }))
+
+      return {
+        ...prev,
+        [selectedSetId]: cur
+      }
+    })
 
     try {
 
@@ -376,6 +382,7 @@ export default function InterviewSetsApp() {
 
     }
   }
+
 
   function getReviewedCount() {
     if (!selectedSetId) return 0
